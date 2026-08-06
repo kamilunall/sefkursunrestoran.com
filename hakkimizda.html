@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkımızda | Şef Kurşun Restoran - Silifke</title>
+  <meta name="description" content="27 yıllık aşçılık tecrübesiyle Emekli Şef Kemal Fatih Kurşun'un helal et hassasiyeti ve lezzet yolculuğu. Şef Kurşun Restoran Silifke.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --accent-color: #f57c00;
+      --bg-body: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-main: #1a1a1a;
+      --text-sub: #6c757d;
+      --border-color: #e9ecef;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+
+    .btn-qr {
+      background-color: var(--primary-color);
+      color: #fff !important;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600 !important;
+      box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
+    }
+
+    /* KAPSAYICI CONTAINER */
+    .content-wrapper {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--primary-color);
+      padding-left: 12px;
+    }
+
+    /* KİTAP ARKASI / YAZAR BİYOGRAFİSİ TARZI ALAN */
+    .biography-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    /* Sola hizalı görsel ve etrafından akan metin (Float) */
+    .chef-photo {
+      float: left;
+      width: 170px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 1.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .chef-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.3rem;
+    }
+
+    .chef-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1.2rem;
+    }
+
+    .story-text {
+      font-size: 1rem;
+      color: #333333;
+      text-align: justify;
+    }
+
+    .story-text p {
+      margin-bottom: 1.2rem;
+    }
+
+    /* FIX FLOAT OVERFLOW */
+    .biography-card::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* TEDARİK VE HASSASİYET ÖZETİ */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .value-box {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      border-top: 3px solid var(--primary-color);
+    }
+
+    .value-box h3 {
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .value-box p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #ffffff;
+      color: var(--text-sub);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 600px) {
+      .chef-photo {
+        float: none;
+        display: block;
+        margin: 0 auto 1.5rem auto;
+        width: 150px;
+        height: 195px;
+      }
+      .biography-card {
+        padding: 1.5rem;
+      }
+      .story-text {
+        text-align: left;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="/" class="logo">✨ Şef Kurşun Restoran</a>
+      <ul class="nav-links">
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/hakkimizda.html" class="active">Hakkımızda</a></li>
+        <li><a href="/iletisim.html">İletişim</a></li>
+        <li><a href="/QRMENU/" class="btn-qr">📱 QR Menü</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="content-wrapper">
+    <h1 class="page-title">Hakkımızda</h1>
+
+    <article class="biography-card">
+      <!-- SOLA HİZALI VESİKALIK / PORTRE GÖRSEL -->
+      <img src="kemal-kursun.jpg" alt="Şef Kemal Fatih Kurşun" class="chef-photo" onerror="this.src='https://via.placeholder.com/170x220?text=Şef+Kemal+Kurşun';">
+      
+      <h2 class="chef-name">Kemal Fatih Kurşun</h2>
+      <div class="chef-title">Kurucu & Başşef (Emekli)</div>
+
+      <div class="story-text">
+        <p>
+          Mutfak sanatlarına adanmış 27 yıllık gurur dolu bir meslek hayatının ardından emekliliğe ayrılan Şef Kemal Fatih Kurşun, çeyrek asrı aşan bu süreçte otellerden öğrenci yurtlarına kadar geniş bir yelpazede lezzet ve toplu yemek hizmetlerine liderlik etmiştir. 
+        </p>
+        <p>
+          Uzun yıllara dayanan deneyimi boyunca edindiği en temel ilke, sofraya sunulan her bir lokmanın lezzeti kadar güvenilirliği olmuştur. Kendisi ve ailesi başta olmak üzere, Silifke halkının helal gıda ve temiz mutfak konusundaki hassasiyetlerini göz önünde bulunduran Şef Kemal Fatih Kurşun, Nisan 2025'te kapılarını açan Şef Kurşun Restoran'ı hayata geçirmiştir.
+        </p>
+        <p>
+          Amacımız; lezzeti, hijyeni ve helal et hassasiyetini samimi bir esnaf ustalığıyla harmanlayarak siz değerli misafirlerimize her ziyaretinizde pürüzsüz ve güvenilir bir yemek deneyimi sunmaktır.
+        </p>
+      </div>
+    </article>
+
+    <!-- ÜRÜN VE TEDARİK STANDARTLARI -->
+    <section class="values-grid">
+      <div class="value-box">
+        <h3>🥩 %100 Güvenli Kırmızı Et</h3>
+        <p>Kırmızı et ürünlerimiz; besmele ile usulüne uygun olarak kesilen küçükbaş ve büyükbaş hayvanların etlerinden özenle seçilerek işlenmektedir.</p>
+      </div>
+      <div class="value-box" style="border-top-color: var(--accent-color);">
+        <h3>🍗 Kaliteli Beyaz Et</h3>
+        <p>Döner ve çorbalarımızda kullandığımız tavuk eti mamulleri, bölgenin güvenilir markası <strong>Akdeniz Toros</strong> ürünlerinden tedarik edilmektedir.</p>
+      </div>
+      <div class="value-box" style="border-top-color: #4caf50;">
+        <h3>🧀 Yerel & Taze Süt Ürünleri</h3>
+        <p>Sıkma ve böreklerimizde eriyen peynirlerimiz, yoğurt ve cacıklarımız tamamen Silifke'nin yerel değeri <strong>Taşeli</strong> firmasından temin edilir.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Şef Kurşun Restoran - Silifke / Mersin. Tüm hakları saklıdır.</p>
+  </footer>
+
+</body>
+</html>
