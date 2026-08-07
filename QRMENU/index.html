@@ -24,6 +24,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
@@ -36,14 +40,18 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
-        /* MODERN HEADER / COVER */
+        /* HEADER / COVER */
         .brand-header {
             background: #ffffff;
             padding: 30px 20px 20px 20px;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
         }
         .brand-logo {
             max-width: 110px;
@@ -62,7 +70,7 @@
             margin-top: 4px;
         }
 
-        /* HÖRNLI TARZI SABİT KATEGORİ NAVİGASYONU */
+        /* SABİT KATEGORİ NAVİGASYONU */
         .category-nav {
             position: sticky;
             top: 0;
@@ -90,6 +98,14 @@
             color: #495057;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .nav-item.home-link {
+            background: #e9ecef;
+            color: #212529;
+            font-weight: 600;
         }
         .nav-item.active {
             background: var(--primary-color);
@@ -122,7 +138,7 @@
             gap: 12px;
         }
 
-        /* HÖRNLI STİLİ MODERN YEMEK KARTLARI */
+        /* YEMEK KARTLARI */
         .menu-card {
             background: var(--bg-card);
             border-radius: 12px;
@@ -180,7 +196,7 @@
         .badge-pop { background: var(--accent-color); }
         .badge-chef { background: #4caf50; }
 
-        /* Ekstra Alanı (Ek Lavaş vb.) */
+        /* Ekstra Alanı */
         .card-extra {
             background: #fff8f2;
             border: 1px dashed var(--accent-color);
@@ -188,7 +204,7 @@
         .card-extra .item-name { color: var(--accent-color); }
         .card-extra .item-price { color: var(--accent-color); }
 
-        /* YASAL MEVZUAT VE FOOTER */
+        /* FOOTER & YASAL MEVZUAT */
         .menu-footer {
             background: #ffffff;
             border-top: 1px solid var(--border-color);
@@ -231,6 +247,38 @@
         .legal-content strong {
             color: #212529;
         }
+
+        /* YÜZEN YUKARI ÇIK BUTONU */
+        .floating-scroll-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .floating-scroll-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .floating-scroll-btn:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -238,14 +286,15 @@
     <div class="phone-container">
         
         <!-- ÜST LOGO VE BAŞLIK -->
-        <header class="brand-header">
+        <a href="https://sefkursunrestoran.com" class="brand-header">
             <img src="Logo.png" alt="Şef Kurşun Logo" class="brand-logo" onerror="this.style.display='none';">
             <h1 class="brand-title">Şef Kurşun Restoran</h1>
             <p class="brand-subtitle">Döner • Tantuni • Ev Yemekleri</p>
-        </header>
+        </a>
 
-        <!-- KATEGORİ BARININ SABİT YAPISI -->
+        <!-- KATEGORİ NAVİGASYONU -->
         <nav class="category-nav" id="categoryNav">
+            <a href="https://sefkursunrestoran.com" class="nav-item home-link">🏠 Ana Sayfa</a>
             <button class="nav-item" data-section="donerler">🥙 Dönerler</button>
             <button class="nav-item" data-section="tantuni">🌮 Tantuni</button>
             <button class="nav-item" data-section="yemekler">🍲 Ev Yemekleri</button>
@@ -277,7 +326,7 @@
                     <div class="menu-card">
                         <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Pilav Üstü Tavuk Döner</span><span class="badge badge-chef">Şefin Seçimi</span></div>
-                            <span class="item-price">250 ₺</span>
+                            <span class="item-price">280 ₺</span>
                         </div>
                         <p class="item-details">Tereyağlı pirinç pilavının üzerinde nar gibi kızarmış nefis tavuk döner, patates kızartması ve salata ile.</p>
                     </div>
@@ -304,7 +353,7 @@
                     <div class="menu-card">
                         <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Yoğurtlu Tavuk Tantuni</span></div>
-                            <span class="item-price">210 ₺</span>
+                            <span class="item-price">220 ₺</span>
                         </div>
                         <p class="item-details">Dilimlenmiş enfes tavuk tantuni dürümü, süzme yoğurt ve kızgın tereyağ sosuyla.</p>
                     </div>
@@ -318,7 +367,7 @@
                     <div class="menu-card">
                         <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Yoğurtlu Et Tantuni</span><span class="badge badge-chef">Gurme</span></div>
-                            <span class="item-price">310 ₺</span>
+                            <span class="item-price">320 ₺</span>
                         </div>
                         <p class="item-details">Sıcak sacdan tabağa; yoğurt yatağında tereyağlı ve soslu et tantuni şöleni.</p>
                     </div>
@@ -335,6 +384,13 @@
             <section id="yemekler">
                 <h2 class="section-title">Çorba & Ev Yemekleri</h2>
                 <div class="items-grid">
+                    <div class="menu-card">
+                        <div class="card-top">
+                            <div class="item-name-group"><span class="item-name">Günlük Menü</span><span class="badge badge-chef">Günün Menüsü</span></div>
+                            <span class="item-price">200 ₺</span>
+                        </div>
+                        <p class="item-details">Günün özel hazırlanan ev yemeği tabağı.</p>
+                    </div>
                     <div class="menu-card">
                         <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Mercimek Çorbası</span></div>
@@ -358,6 +414,13 @@
                     </div>
                     <div class="menu-card">
                         <div class="card-top">
+                            <div class="item-name-group"><span class="item-name">Etli Nohut</span></div>
+                            <span class="item-price">120 ₺</span>
+                        </div>
+                        <p class="item-details">Lokum gibi pişmiş, etli ve kıvamlı tam bir anne yemeği.</p>
+                    </div>
+                    <div class="menu-card">
+                        <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Kuru Fasulye</span></div>
                             <span class="item-price">120 ₺</span>
                         </div>
@@ -365,10 +428,10 @@
                     </div>
                     <div class="menu-card">
                         <div class="card-top">
-                            <div class="item-name-group"><span class="item-name">Nohut Yemeği</span></div>
+                            <div class="item-name-group"><span class="item-name">Taze Fasulye</span></div>
                             <span class="item-price">120 ₺</span>
                         </div>
-                        <p class="item-details">Lokum gibi pişmiş, etli ve kıvamlı tam bir anne yemeği.</p>
+                        <p class="item-details">Zeytinyağlı taze ve hafif domates soslu taze fasulye.</p>
                     </div>
                     <div class="menu-card">
                         <div class="card-top">
@@ -380,7 +443,7 @@
                     <div class="menu-card">
                         <div class="card-top">
                             <div class="item-name-group"><span class="item-name">Yoğurt</span></div>
-                            <span class="item-price">60 ₺</span>
+                            <span class="item-price">70 ₺</span>
                         </div>
                         <p class="item-details">Yemeklerin yanına buz gibi, taze ve kıvamlı kase yoğurt.</p>
                     </div>
@@ -391,6 +454,13 @@
                         </div>
                         <p class="item-details">Taze salatalık, nane ve zeytinyağı ile buluşan serinletici lezzet.</p>
                     </div>
+                    <div class="menu-card">
+                        <div class="card-top">
+                            <div class="item-name-group"><span class="item-name">Salata</span></div>
+                            <span class="item-price">50 ₺</span>
+                        </div>
+                        <p class="item-details">Taze mevsim yeşillikleri ve domates ile hazırlanan söğüş salata.</p>
+                    </div>
                 </div>
             </section>
 
@@ -398,35 +468,37 @@
             <section id="borekler">
                 <h2 class="section-title">Sıkma & Börekler</h2>
                 <div class="items-grid">
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Patatesli Sıkma</span><span class="item-price">70 ₺</span></div><p class="item-details">Baharatlı patates harcıyla hazırlanan sıcacık el açması sıkma.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Sade Bazlama</span><span class="item-price">25 ₺</span></div><p class="item-details">Sıcacık, taze pişmiş sade bazlama ekmeği.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Patatesli Sıkma</span><span class="item-price">60 ₺</span></div><p class="item-details">Baharatlı patates harcıyla hazırlanan sıcacık el açması sıkma.</p></div>
                     <div class="menu-card"><div class="card-top"><span class="item-name">Kaşar Peynirli Sıkma</span><span class="item-price">80 ₺</span></div><p class="item-details">Sıcağıyla eriyen bol kaşar peynirli nefis lezzet.</p></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Deri Peynirli Sıkma</span><span class="item-price">90 ₺</span></div><p class="item-details">Yöresel lezzetli deri peyniriyle hazırlanan özel sıkma.</p></div>
                     <div class="menu-card"><div class="card-top"><span class="item-name">Çökelekli Sıkma</span><span class="item-price">80 ₺</span></div><p class="item-details">Geleneksel çökelek peyniri ve yeşillik dolgulu hafif sıkma.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Deri Peynirli Sıkma</span><span class="item-price">100 ₺</span></div><p class="item-details">Yöresel lezzetli deri peyniriyle hazırlanan özel sıkma.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Patatesli Börek</span><span class="item-price">100 ₺</span></div><p class="item-details">Baharatlı ve patatesli el açması sac böreği.</p></div>
                     <div class="menu-card"><div class="card-top"><span class="item-name">Ispanaklı Börek</span><span class="item-price">100 ₺</span></div><p class="item-details">Taze ıspanak ve soğan harçlı, sacda pişmiş çıtır börek.</p></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kaşar Peynirli Börek</span><span class="item-price">100 ₺</span></div><p class="item-details">Eriyen bol kaşar peynirli el açması sac böreği.</p></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Deri Peynirli Börek</span><span class="item-price">110 ₺</span></div><p class="item-details">Yöresel deri peynirinin eşsiz aromasıyla hazırlanan börek.</p></div>
                     <div class="menu-card"><div class="card-top"><span class="item-name">Çökelekli Börek</span><span class="item-price">100 ₺</span></div><p class="item-details">Hafif ve lezzetli çökelek peynirli sac böreği.</p></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Karışık Börek (Ispanak+Kaşar)</span><span class="item-price">110 ₺</span></div><p class="item-details">Ispanak ve eriyen kaşar peynirinin mükemmel uyumu.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Kaşar Peynirli Börek</span><span class="item-price">110 ₺</span></div><p class="item-details">Eriyen bol kaşar peynirli el açması sac böreği.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Deri Peynirli Börek</span><span class="item-price">125 ₺</span></div><p class="item-details">Yöresel deri peynirinin eşsiz aromasıyla hazırlanan börek.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Karışık Börek (Ispanak + Kaşar)</span><span class="item-price">130 ₺</span></div><p class="item-details">Ispanak ve eriyen kaşar peynirinin mükemmel uyumu.</p></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Karışık Börek (Patates + Kaşar)</span><span class="item-price">130 ₺</span></div><p class="item-details">Baharatlı patates ve eriyen kaşar peynirli lezzet ikilisi.</p></div>
                 </div>
             </section>
 
             <!-- İÇECEKLER -->
             <section id="icecekler">
-                <h2 class="section-title">Soğuk İçecekler</h2>
+                <h2 class="section-title">Soğuk & Sıcak İçecekler</h2>
                 <div class="items-grid">
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Cam Kola - Sarıyer</span><span class="item-price">50 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Cam Gazoz - Sarıyer</span><span class="item-price">50 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Cam Portakal - Sarıyer</span><span class="item-price">50 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu Kola - Sarıyer</span><span class="item-price">60 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu Gazoz - Sarıyer</span><span class="item-price">60 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu Portakal - Sarıyer</span><span class="item-price">60 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu Mandalina - Sarıyer</span><span class="item-price">60 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Şalgam (Sade / Acılı)</span><span class="item-price">50 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Maden Suyu</span><span class="item-price">30 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Meyveli Maden Suyu</span><span class="item-price">40 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Açık Ayran</span><span class="item-price">30 ₺</span></div></div>
-                    <div class="menu-card"><div class="card-top"><span class="item-name">Kapalı Ayran (Taşeli)</span><span class="item-price">30 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Çay</span><span class="item-price">10 ₺</span></div></div>
                     <div class="menu-card"><div class="card-top"><span class="item-name">Su 0.5L</span><span class="item-price">15 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Soda / Maden Suyu</span><span class="item-price">30 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Ayran (Kapalı / Açık)</span><span class="item-price">30 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Meyveli Soda</span><span class="item-price">45 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Cam Şişe İçecekler (Sarıyer Kola/Gazoz/Portakal/Mand.)</span><span class="item-price">50 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Şalgam (Sade / Acılı)</span><span class="item-price">50 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu İçecekler (Sarıyer Kola/Gazoz/Portakal/Mandalina & Soğuk Çay)</span><span class="item-price">60 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">Kutu Kola (Pepsi)</span><span class="item-price">70 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">1 Lt Pepsi / Yedigün</span><span class="item-price">75 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">1.5 Lt Pepsi / Yedigün</span><span class="item-price">90 ₺</span></div></div>
+                    <div class="menu-card"><div class="card-top"><span class="item-name">2.5 Lt Pepsi / Yedigün</span><span class="item-price">130 ₺</span></div></div>
                 </div>
             </section>
 
@@ -435,7 +507,7 @@
         <!-- YASAL MEVZUAT ALANI -->
         <footer class="menu-footer">
             <div class="footer-logo-text">✨ Şef Kurşun Restoran ✨</div>
-            <div class="menu-update-date">Menü Güncelleme Tarihi: 06.07.2026</div>
+            <div class="menu-update-date">Menü Güncelleme Tarihi: 07.08.2026</div>
             
             <div class="legal-container">
                 <div class="legal-header">Tüketici Bilgilendirme ve Mevzuat Beyanı</div>
@@ -449,12 +521,23 @@
             </div>
         </footer>
 
+        <!-- SAĞ ALT KÖŞE YÜZEN YUKARI ÇIK BUTONU -->
+        <button class="floating-scroll-btn" id="floatingScrollBtn" onclick="scrollToTop()">
+            ⬆️ Yukarı
+        </button>
+
     </div>
 
     <script>
-        const navItems = document.querySelectorAll('.nav-item');
+        const navItems = document.querySelectorAll('.nav-item[data-section]');
         const sections = document.querySelectorAll('main section');
+        const floatingBtn = document.getElementById('floatingScrollBtn');
 
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Kategori Navigasyonu Tıklama
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 const targetId = item.dataset.section;
@@ -465,6 +548,16 @@
             });
         });
 
+        // Yüzen Buton Kontrolü
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                floatingBtn.classList.add('visible');
+            } else {
+                floatingBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll Takibi ile Aktif Kategoriyi Güncelleme
         const observerOptions = {
             root: null,
             rootMargin: '-20% 0px -60% 0px',
@@ -475,6 +568,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const currentId = entry.target.id;
+                    
                     navItems.forEach(item => {
                         const isActive = item.dataset.section === currentId;
                         item.classList.toggle('active', isActive);
