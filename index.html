@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Şef Kurşun Restoran | Silifke Tantuni, Döner & Ev Yemekleri</title>
-  <meta name="description" content="Silifke'nin meşhur Şef Kurşun Restoran'ında %100 kuzu etinden Tantuni, özel soslu Döner, Taşeli peynirli Sıkma ve ev yemekleri.">
+  <meta name="description" content="Silifke'nin meşhur Şef Kurşun Restoran'ında %100 kuzu etinden Tantuni, özel soslu Döner, Taşeli peynirli Sıkma ve ev yemekleri. WhatsApp ile online sipariş.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-color: #e63946;
       --accent-color: #f57c00;
+      --whatsapp: #25d366;
+      --whatsapp-dark: #1da851;
       --bg-body: #f8f9fa;
       --bg-card: #ffffff;
       --text-main: #1a1a1a;
@@ -62,6 +64,8 @@
       gap: 1.2rem;
       list-style: none;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .nav-links a {
@@ -83,6 +87,11 @@
       border-radius: 30px;
       font-weight: 600 !important;
       box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
+    }
+
+    .nav-siparis {
+      color: var(--whatsapp-dark) !important;
+      font-weight: 600 !important;
     }
 
     /* HERO */
@@ -144,6 +153,25 @@
       text-decoration: none;
       font-weight: 600;
       border-radius: 30px;
+    }
+
+    .btn-hero-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--whatsapp);
+      color: #fff;
+      padding: 0.8rem 1.8rem;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 30px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-hero-wa:hover {
+      background-color: var(--whatsapp-dark);
+      transform: translateY(-2px);
     }
 
     /* ÖNE ÇIKAN KATEGORİLER */
@@ -214,9 +242,71 @@
       background-color: #ffffff;
       color: var(--text-sub);
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.5rem 5.5rem; /* Alt boşluk: sabit buton footer metnini kapatmasın */
       border-top: 1px solid var(--border-color);
       font-size: 0.85rem;
+    }
+
+    /* ================================================
+       SAĞ ALT SABİT WHATSAPP SİPARİŞ BUTONU (ELİPS)
+       ================================================ */
+    .wa-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--whatsapp);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 22px 12px 14px;
+      border-radius: 50px;               /* elips / hap formu */
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+      animation: wa-nabiz 2.4s ease-in-out infinite;
+      white-space: nowrap;
+    }
+
+    .wa-float:hover {
+      background-color: var(--whatsapp-dark);
+      transform: translateY(-3px) scale(1.03);
+      animation: none;
+    }
+
+    .wa-float svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      fill: #fff;
+    }
+
+    .wa-float span small {
+      display: block;
+      font-weight: 500;
+      font-size: 0.72rem;
+      opacity: 0.9;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    @keyframes wa-nabiz {
+      0%, 100% { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50%      { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45), 0 0 0 12px rgba(37, 211, 102, 0); }
+    }
+
+    /* Mobilde metni gizle, yuvarlak logoya dönüş */
+    @media (max-width: 600px) {
+      .wa-float {
+        padding: 14px;
+        right: 16px;
+        bottom: 16px;
+      }
+      .wa-float span { display: none; }
+      .wa-float svg { width: 30px; height: 30px; }
     }
 
     @media (max-width: 768px) {
@@ -234,6 +324,7 @@
         <li><a href="/">Ana Sayfa</a></li>
         <li><a href="/hakkimizda.html">Hakkımızda</a></li>
         <li><a href="/iletisim.html">İletişim</a></li>
+        <li><a href="/SIPARIS/" class="nav-siparis">🛵 Sipariş Ver</a></li>
         <li><a href="/QRMENU/" class="btn-qr">📱 QR Menü</a></li>
       </ul>
     </nav>
@@ -244,6 +335,10 @@
     <h1>Şef Kurşun Restoran</h1>
     <p>Geleneksel sacda Mersin Tantuni, özel soslu Antakya Döner, Taşeli peynirli sıcak sıkmalar ve günlük taze ev yemekleri.</p>
     <div class="hero-buttons">
+      <a href="/SIPARIS/" class="btn-hero-wa">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        WhatsApp ile Sipariş Ver
+      </a>
       <a href="/QRMENU/" class="btn-main">Fiyat Listesi & QR Menü</a>
       <a href="/iletisim.html" class="btn-outline">İletişim & Konum</a>
     </div>
@@ -276,6 +371,7 @@
         <h2>Kalite & Tedarik Beyanı</h2>
         <p>Tüm yoğurt ve peynir çeşitlerimiz <strong>Taşeli</strong> markasından, tavuk ürünlerimiz kesintisiz soğuk zincirle <strong>Akdeniz Toros</strong>'tan tedarik edilmektedir.</p>
         <p><strong>Masa Menüsü:</strong> Tüm güncel fiyatlarımıza ve alerjen detaylarına <a href="/QRMENU/" style="color:var(--primary-color); font-weight:600; text-decoration:none;">Online QR Menü</a> üzerinden ulaşabilirsiniz.</p>
+        <p><strong>Eve Servis:</strong> Dürüm, sıkma ve içeceklerinizi <a href="/SIPARIS/" style="color:var(--whatsapp-dark); font-weight:600; text-decoration:none;">WhatsApp üzerinden</a> kolayca sipariş edebilirsiniz.</p>
       </div>
     </div>
   </section>
@@ -283,6 +379,12 @@
   <footer>
     <p>&copy; 2026 Şef Kurşun Restoran - Silifke / Mersin. Tüm hakları saklıdır.</p>
   </footer>
+
+  <!-- SAĞ ALT SABİT WHATSAPP SİPARİŞ BUTONU -->
+  <a href="/SIPARIS/" class="wa-float" aria-label="WhatsApp ile Sipariş Ver">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+    <span><small>Eve servis</small>WhatsApp ile Sipariş</span>
+  </a>
 
 </body>
 </html>
