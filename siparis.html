@@ -44,9 +44,7 @@
   .secenek-grup h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.4px;color:var(--gri);margin-bottom:6px}
   .secenek-grup label{display:flex;align-items:center;gap:10px;padding:7px 4px;font-size:.95rem;cursor:pointer}
   .secenek-grup label span.ek{margin-left:auto;font-size:.85rem;color:var(--kirmizi);font-weight:600}
-  /* checkbox kare, radio yuvarlak: tarayıcı varsayılanı; büyütüyoruz */
   input[type=checkbox],input[type=radio]{width:20px;height:20px;accent-color:var(--kirmizi);flex-shrink:0}
-  input[type=checkbox]{border-radius:4px}
   .icecek-liste{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
   @media(max-width:480px){.icecek-liste{grid-template-columns:1fr}}
 
@@ -63,13 +61,11 @@
   .adet button{width:38px;height:38px;border:0;background:#fff;font-size:1.2rem;cursor:pointer;color:var(--kirmizi);font-weight:700}
   .adet span{min-width:34px;text-align:center;font-weight:700}
 
-  /* Sepet çubuğu */
   .sepet-bar{position:fixed;bottom:0;left:0;right:0;background:var(--koyu);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:60;box-shadow:0 -3px 14px rgba(0,0,0,.25);transform:translateY(110%);transition:.25s}
   .sepet-bar.goster{transform:translateY(0)}
   .sepet-bar .ozet small{display:block;opacity:.75;font-size:.8rem}
   .sepet-bar .ozet b{font-size:1.15rem}
 
-  /* Sepet / Form paneli */
   .panel-arka{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;display:none;align-items:flex-end;justify-content:center}
   .panel-arka.goster{display:flex}
   .panel{background:var(--krem);width:100%;max-width:760px;max-height:92vh;border-radius:20px 20px 0 0;overflow-y:auto;padding:18px 16px 24px;animation:yukari .25s}
@@ -96,6 +92,15 @@
   .hata{color:var(--kirmizi);font-size:.82rem;margin-top:4px;display:none}
   .alan.gecersiz input,.alan.gecersiz textarea{border-color:var(--kirmizi)}
   .alan.gecersiz .hata{display:block}
+
+  /* Sipariş türü */
+  .tur-secim{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tur-secim label.tur{display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:2px solid #e6d8c8;border-radius:12px;padding:12px;cursor:pointer;font-weight:600;margin:0;transition:.15s}
+  .tur-secim label.tur.secili{border-color:var(--kirmizi);background:#fff1ef;color:var(--kirmizi)}
+  .tur-secim input{width:18px;height:18px;accent-color:var(--kirmizi)}
+  #teslimatAlanlari.gizli{display:none}
+  .gelal-bilgi{background:#e8f5e9;color:#1a7f37;border-radius:10px;padding:10px 12px;font-size:.88rem;margin-bottom:14px;display:none}
+  .gelal-bilgi.goster{display:block}
 
   .konum-kutu{background:#fff;border:1.5px dashed #e6d8c8;border-radius:12px;padding:12px}
   .konum-btnler{display:flex;gap:8px;flex-wrap:wrap}
@@ -131,13 +136,11 @@
 
 <footer>Fiyatlarımıza KDV dahildir. Servis ücreti alınmamaktadır.<br>Sipariş onayı WhatsApp üzerinden yapılır.</footer>
 
-<!-- Sepet çubuğu -->
 <div class="sepet-bar" id="sepetBar">
   <div class="ozet"><small id="sepetAdet">0 ürün</small><b id="sepetToplam">0 ₺</b></div>
   <button class="btn btn-kirmizi" onclick="panelAc()">Sepeti Gör & Sipariş Ver →</button>
 </div>
 
-<!-- Sepet + Form paneli -->
 <div class="panel-arka" id="panelArka" onclick="if(event.target===this)panelKapat()">
   <div class="panel">
     <div class="panel-baslik">
@@ -150,6 +153,23 @@
 
     <form id="siparisForm" novalidate>
       <h2 style="font-size:1.1rem;color:var(--kirmizi);margin:14px 0 12px">📋 Teslimat Bilgileri</h2>
+
+      <div class="alan">
+        <label>Sipariş Türü <span class="zorunlu">*</span></label>
+        <div class="tur-secim">
+          <label class="tur secili">
+            <input type="radio" name="tur" value="teslimat" checked onchange="turDegisti()">
+            🛵 Adrese Teslim
+          </label>
+          <label class="tur">
+            <input type="radio" name="tur" value="gelal" onchange="turDegisti()">
+            🏪 Gel-Al
+          </label>
+        </div>
+      </div>
+      <div class="gelal-bilgi" id="gelalBilgi">
+        🏪 Siparişiniz hazır olduğunda WhatsApp üzerinden bilgilendirilirsiniz; restoranımızdan teslim alabilirsiniz.
+      </div>
 
       <div class="satir-2">
         <div class="alan" id="alan-ad">
@@ -164,22 +184,24 @@
         </div>
       </div>
 
-      <div class="alan" id="alan-adres">
-        <label>Adres <span class="zorunlu">*</span></label>
-        <textarea id="adres" placeholder="Mahalle, sokak, bina no, daire, kat... Tarif ekleyebilirsiniz."></textarea>
-        <div class="hata">Lütfen teslimat adresinizi yazın.</div>
-      </div>
+      <div id="teslimatAlanlari">
+        <div class="alan" id="alan-adres">
+          <label>Adres <span class="zorunlu">*</span></label>
+          <textarea id="adres" placeholder="Mahalle, sokak, bina no, daire, kat... Tarif ekleyebilirsiniz."></textarea>
+          <div class="hata">Lütfen teslimat adresinizi yazın.</div>
+        </div>
 
-      <div class="alan">
-        <label>📍 Konum (isteğe bağlı, kuryeye kolaylık)</label>
-        <div class="konum-kutu">
-          <div class="konum-btnler">
-            <button type="button" class="btn btn-cizgi" onclick="konumBul()">🎯 Konumumu Bul</button>
-            <button type="button" class="btn btn-cizgi" onclick="haritaAc()">🗺️ Haritada Seç</button>
-            <button type="button" class="btn btn-cizgi" id="konumSilBtn" style="display:none" onclick="konumSil()">✖ Kaldır</button>
+        <div class="alan">
+          <label>📍 Konum (isteğe bağlı, kuryeye kolaylık)</label>
+          <div class="konum-kutu">
+            <div class="konum-btnler">
+              <button type="button" class="btn btn-cizgi" onclick="konumBul()">🎯 Konumumu Bul</button>
+              <button type="button" class="btn btn-cizgi" onclick="haritaAc()">🗺️ Haritada Seç</button>
+              <button type="button" class="btn btn-cizgi" id="konumSilBtn" style="display:none" onclick="konumSil()">✖ Kaldır</button>
+            </div>
+            <div id="harita"></div>
+            <div class="konum-durum" id="konumDurum">Konum eklenmedi. Haritada iğneyi sürükleyerek tam yerinizi işaretleyebilirsiniz.</div>
           </div>
-          <div id="harita"></div>
-          <div class="konum-durum" id="konumDurum">Konum eklenmedi. Haritada iğneyi sürükleyerek tam yerinizi işaretleyebilirsiniz.</div>
         </div>
       </div>
 
@@ -199,36 +221,35 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* ==========================================================
-   AYARLAR
-   ========================================================== */
-const WHATSAPP_NO = "905073702399";          // Ülke kodu ile, + ve boşluk olmadan
-const PAZAR_SIPARIS_ENGELLE = false;         // true yaparsanız Pazar günü buton kapanır
-const SILIFKE_MERKEZ = [36.3778, 33.9344];   // Harita varsayılan merkezi
+/* ================= AYARLAR ================= */
+const WHATSAPP_NO = "905073702399";
+const PAZAR_SIPARIS_ENGELLE = false;
+const SILIFKE_MERKEZ = [36.3778, 33.9344];
 
-/* ==========================================================
-   MENÜ VERİSİ  (fiyatları buradan güncelleyin)
-   ========================================================== */
+/* ================= MENÜ VERİSİ ================= */
 const MALZEME_SECENEKLERI = ["Soğan olmasın", "Maydanoz olmasın", "Ketçap olmasın", "Mayonez olmasın"];
-const LAVAS_SECENEKLERI   = [
-  { ad: "Tek Lavaş",  ek: 0 },
-  { ad: "Çift Lavaş", ek: 10 },
-  { ad: "Somun Ekmek", ek: 0 }
+const LAVAS_SECENEKLERI = [
+  { ad:"Tek Lavaş",   ek:0 },
+  { ad:"Çift Lavaş",  ek:10 },
+  { ad:"Somun Ekmek", ek:0 }
 ];
 
 const ICECEKLER = [
-  { id:"cay",     ad:"Çay",                                 fiyat:10 },
-  { id:"su",      ad:"Su 0.5L",                             fiyat:15 },
-  { id:"soda",    ad:"Soda / Maden Suyu",                   fiyat:30 },
-  { id:"ayran",   ad:"Ayran (Kapalı / Açık)",               fiyat:30 },
-  { id:"msoda",   ad:"Meyveli Soda",                        fiyat:45 },
-  { id:"cam",     ad:"Cam Şişe (Sarıyer Kola/Gazoz/Portakal/Mand.)", fiyat:50 },
-  { id:"salgam",  ad:"Şalgam (Sade / Acılı)",               fiyat:50 },
-  { id:"kutu",    ad:"Kutu İçecek (Sarıyer & Soğuk Çay)",   fiyat:60 },
-  { id:"pepsi",   ad:"Kutu Kola (Pepsi)",                   fiyat:70 },
-  { id:"p1",      ad:"1 Lt Pepsi / Yedigün",                fiyat:75 },
-  { id:"p15",     ad:"1.5 Lt Pepsi / Yedigün",              fiyat:90 },
-  { id:"p25",     ad:"2.5 Lt Pepsi / Yedigün",              fiyat:130 }
+  { id:"cay",           ad:"Çay",                               fiyat:10 },
+  { id:"su",            ad:"Su 0.5L",                           fiyat:15 },
+  { id:"soda",          ad:"Soda / Maden Suyu",                 fiyat:30 },
+  { id:"ayran",         ad:"Ayran (Kapalı / Açık)",             fiyat:30 },
+  { id:"msoda",         ad:"Meyveli Soda",                      fiyat:45 },
+  { id:"cam-kola",      ad:"Sarıyer Kola (Cam Şişe)",           fiyat:50 },
+  { id:"cam-gazoz",     ad:"Sarıyer Gazoz (Cam Şişe)",          fiyat:50 },
+  { id:"cam-portakal",  ad:"Sarıyer Portakal (Cam Şişe)",       fiyat:50 },
+  { id:"cam-mandalina", ad:"Sarıyer Mandalina (Cam Şişe)",      fiyat:50 },
+  { id:"salgam",        ad:"Şalgam (Sade / Acılı)",             fiyat:50 },
+  { id:"kutu",          ad:"Kutu İçecek (Sarıyer & Soğuk Çay)", fiyat:60 },
+  { id:"pepsi",         ad:"Kutu Kola (Pepsi)",                 fiyat:70 },
+  { id:"p1",            ad:"1 Lt Pepsi / Yedigün",              fiyat:75 },
+  { id:"p15",           ad:"1.5 Lt Pepsi / Yedigün",            fiyat:90 },
+  { id:"p25",           ad:"2.5 Lt Pepsi / Yedigün",            fiyat:130 }
 ];
 
 const KATEGORILER = [
@@ -236,37 +257,37 @@ const KATEGORILER = [
     id:"durumler", baslik:"🥙 Dürümler",
     secenekli:true, lavas:true, malzeme:true, icecek:true,
     urunler:[
-      { id:"tavuk-doner",   ad:"Tavuk Döner Dürüm",  fiyat:160, etiket:"",          aciklama:"Özel soslu taze tavuk döner, çıtır lavaşta." },
-      { id:"antakya-doner", ad:"Antakya Döner",      fiyat:180, etiket:"Popüler",   aciklama:"Bol soslu, özel baharatlı ve patates kızartmalı Antakya usulü dürüm." },
-      { id:"tavuk-tantuni", ad:"Tavuk Tantuni Dürüm",fiyat:180, etiket:"",          aciklama:"Pamuk gibi pişmiş tavuk eti, sumaklı soğan, domates ve taze maydanozla." },
-      { id:"et-tantuni",    ad:"Et Tantuni Dürüm",   fiyat:280, etiket:"Çok Satan", aciklama:"Geleneksel sacda pişen %100 kuzu eti, soğan ve domatesle incecik lavaşta." }
+      { id:"tavuk-doner",   ad:"Tavuk Döner Dürüm",   fiyat:160, etiket:"",          aciklama:"Özel soslu taze tavuk döner, çıtır lavaşta." },
+      { id:"antakya-doner", ad:"Antakya Döner",       fiyat:180, etiket:"Popüler",   aciklama:"Bol soslu, özel baharatlı ve patates kızartmalı Antakya usulü dürüm." },
+      { id:"tavuk-tantuni", ad:"Tavuk Tantuni Dürüm", fiyat:180, etiket:"",          aciklama:"Pamuk gibi pişmiş tavuk eti, sumaklı soğan, domates ve taze maydanozla." },
+      { id:"et-tantuni",    ad:"Et Tantuni Dürüm",    fiyat:280, etiket:"Çok Satan", aciklama:"Geleneksel sacda pişen %100 kuzu eti, soğan ve domatesle incecik lavaşta." }
     ]
   },
   {
     id:"tabaklar", baslik:"🍛 Tabaklar",
     secenekli:true, lavas:false, malzeme:true, icecek:true,
     urunler:[
-      { id:"yog-tavuk-tantuni", ad:"Yoğurtlu Tavuk Tantuni", fiyat:220, etiket:"",              aciklama:"Dilimlenmiş tavuk tantuni, süzme yoğurt ve kızgın tereyağ sosuyla." },
-      { id:"yog-et-tantuni",    ad:"Yoğurtlu Et Tantuni",    fiyat:320, etiket:"Gurme",         aciklama:"Yoğurt yatağında tereyağlı ve soslu et tantuni şöleni." },
-      { id:"pilav-ustu-doner",  ad:"Pilav Üstü Tavuk Döner", fiyat:280, etiket:"Şefin Seçimi",  aciklama:"Tereyağlı pilav üzerinde tavuk döner, patates kızartması ve salata ile." }
+      { id:"yog-tavuk-tantuni", ad:"Yoğurtlu Tavuk Tantuni", fiyat:220, etiket:"",             aciklama:"Dilimlenmiş tavuk tantuni, süzme yoğurt ve kızgın tereyağ sosuyla." },
+      { id:"yog-et-tantuni",    ad:"Yoğurtlu Et Tantuni",    fiyat:320, etiket:"Gurme",        aciklama:"Yoğurt yatağında tereyağlı ve soslu et tantuni şöleni." },
+      { id:"pilav-ustu-doner",  ad:"Pilav Üstü Tavuk Döner", fiyat:280, etiket:"Şefin Seçimi", aciklama:"Tereyağlı pilav üzerinde tavuk döner, patates kızartması ve salata ile." }
     ]
   },
   {
     id:"sikmalar", baslik:"🥞 Sıkma & Börekler",
     secenekli:false,
     urunler:[
-      { id:"bazlama",        ad:"Sade Bazlama",                    fiyat:25 },
-      { id:"pat-sikma",      ad:"Patatesli Sıkma",                 fiyat:60 },
-      { id:"kasar-sikma",    ad:"Kaşar Peynirli Sıkma",            fiyat:80 },
-      { id:"cokelek-sikma",  ad:"Çökelekli Sıkma",                 fiyat:80 },
-      { id:"deri-sikma",     ad:"Deri Peynirli Sıkma",             fiyat:100 },
-      { id:"pat-borek",      ad:"Patatesli Börek",                 fiyat:100 },
-      { id:"ispanak-borek",  ad:"Ispanaklı Börek",                 fiyat:100 },
-      { id:"cokelek-borek",  ad:"Çökelekli Börek",                 fiyat:100 },
-      { id:"kasar-borek",    ad:"Kaşar Peynirli Börek",            fiyat:110 },
-      { id:"deri-borek",     ad:"Deri Peynirli Börek",             fiyat:125 },
-      { id:"karisik-ik",     ad:"Karışık Börek (Ispanak + Kaşar)", fiyat:130 },
-      { id:"karisik-pk",     ad:"Karışık Börek (Patates + Kaşar)", fiyat:130 }
+      { id:"bazlama",       ad:"Sade Bazlama",                    fiyat:25 },
+      { id:"pat-sikma",     ad:"Patatesli Sıkma",                 fiyat:60 },
+      { id:"kasar-sikma",   ad:"Kaşar Peynirli Sıkma",            fiyat:80 },
+      { id:"cokelek-sikma", ad:"Çökelekli Sıkma",                 fiyat:80 },
+      { id:"deri-sikma",    ad:"Deri Peynirli Sıkma",             fiyat:100 },
+      { id:"pat-borek",     ad:"Patatesli Börek",                 fiyat:100 },
+      { id:"ispanak-borek", ad:"Ispanaklı Börek",                 fiyat:100 },
+      { id:"cokelek-borek", ad:"Çökelekli Börek",                 fiyat:100 },
+      { id:"kasar-borek",   ad:"Kaşar Peynirli Börek",            fiyat:110 },
+      { id:"deri-borek",    ad:"Deri Peynirli Börek",             fiyat:125 },
+      { id:"karisik-ik",    ad:"Karışık Börek (Ispanak + Kaşar)", fiyat:130 },
+      { id:"karisik-pk",    ad:"Karışık Börek (Patates + Kaşar)", fiyat:130 }
     ]
   },
   {
@@ -286,21 +307,15 @@ const KATEGORILER = [
   }
 ];
 
-/* ==========================================================
-   DURUM
-   ========================================================== */
-let sepet = [];            // { anahtar, ad, birim, adet, detaylar:[] }
-let konum = null;          // { lat, lng }
+/* ================= DURUM ================= */
+let sepet = [];
+let konum = null;
 let harita = null, isaret = null;
-
 const tl = n => n.toLocaleString("tr-TR") + " ₺";
 
-/* ==========================================================
-   MENÜYÜ ÇİZ
-   ========================================================== */
+/* ================= MENÜYÜ ÇİZ ================= */
 function menuCiz(){
-  const main = document.getElementById("menu");
-  main.innerHTML = KATEGORILER.map(kat => `
+  document.getElementById("menu").innerHTML = KATEGORILER.map(kat => `
     <section id="${kat.id}">
       <h2>${kat.baslik}</h2>
       ${kat.urunler.map(u => kat.secenekli ? secenekliKart(kat,u) : basitKart(u)).join("")}
@@ -329,8 +344,7 @@ function secenekliKart(kat,u){
   const malzemeHTML = kat.malzeme ? `
     <div class="secenek-grup">
       <h4>Malzeme Tercihi (çoklu seçim)</h4>
-      ${MALZEME_SECENEKLERI.map((m,i)=>`
-        <label><input type="checkbox" name="malzeme-${u.id}" value="${m}"> ${m}</label>`).join("")}
+      ${MALZEME_SECENEKLERI.map(m=>`<label><input type="checkbox" name="malzeme-${u.id}" value="${m}"> ${m}</label>`).join("")}
     </div>` : "";
 
   const lavasHTML = kat.lavas ? `
@@ -346,8 +360,7 @@ function secenekliKart(kat,u){
       <h4>🥤 Yanında İyi Gider (tek seçim)</h4>
       <div class="icecek-liste">
         <label><input type="radio" name="icecek-${u.id}" value="" checked> İçecek istemiyorum</label>
-        ${ICECEKLER.map(i=>`
-        <label><input type="radio" name="icecek-${u.id}" value="${i.id}"> ${i.ad}<span class="ek">+${i.fiyat} ₺</span></label>`).join("")}
+        ${ICECEKLER.map(i=>`<label><input type="radio" name="icecek-${u.id}" value="${i.id}"> ${i.ad}<span class="ek">+${i.fiyat} ₺</span></label>`).join("")}
       </div>
     </div>` : "";
 
@@ -387,9 +400,7 @@ function secAdet(id,d){
   el.textContent = Math.max(1, (+el.textContent)+d);
 }
 
-/* ==========================================================
-   SEPET İŞLEMLERİ
-   ========================================================== */
+/* ================= SEPET ================= */
 function urunBul(id){
   for(const k of KATEGORILER){ const u = k.urunler.find(x=>x.id===id); if(u) return u; }
 }
@@ -412,13 +423,11 @@ function secenekliEkle(katId,id){
   const kat = KATEGORILER.find(k=>k.id===katId);
   const u = urunBul(id);
   const adet = +document.getElementById("secadet-"+id).textContent;
-
   const detaylar = [];
   let birim = u.fiyat;
 
   if(kat.lavas){
-    const idx = +document.querySelector(`input[name="lavas-${id}"]:checked`).value;
-    const l = LAVAS_SECENEKLERI[idx];
+    const l = LAVAS_SECENEKLERI[+document.querySelector(`input[name="lavas-${id}"]:checked`).value];
     detaylar.push(l.ad + (l.ek?` (+${l.ek} ₺)`:""));
     birim += l.ek;
   }
@@ -436,11 +445,10 @@ function secenekliEkle(katId,id){
   }
 
   const anahtar = id + "|" + detaylar.join("|");
-  let satir = sepet.find(s=>s.anahtar===anahtar);
+  const satir = sepet.find(s=>s.anahtar===anahtar);
   if(satir) satir.adet += adet;
   else sepet.push({ anahtar, ad:u.ad, birim, adet, detaylar });
 
-  // formu sıfırla
   document.querySelectorAll(`input[name="malzeme-${id}"]`).forEach(c=>c.checked=false);
   const ilkLavas = document.querySelector(`input[name="lavas-${id}"]`); if(ilkLavas) ilkLavas.checked = true;
   const ilkIcecek = document.querySelector(`input[name="icecek-${id}"]`); if(ilkIcecek) ilkIcecek.checked = true;
@@ -460,7 +468,6 @@ function satirSil(anahtar){
   const basit = document.getElementById("adet-"+anahtar); if(basit) basit.textContent = 0;
   sepetGuncelle();
 }
-
 function toplamHesapla(){ return sepet.reduce((t,s)=>t+s.birim*s.adet,0); }
 
 function sepetGuncelle(animasyon){
@@ -471,18 +478,18 @@ function sepetGuncelle(animasyon){
   document.getElementById("panelToplam").textContent = tl(toplam);
   document.getElementById("sepetBar").classList.toggle("goster", adet>0);
 
-  const liste = document.getElementById("sepetListe");
-  liste.innerHTML = sepet.length ? sepet.map(s=>`
+  const esc = s => s.replace(/'/g,"\\'");
+  document.getElementById("sepetListe").innerHTML = sepet.length ? sepet.map(s=>`
     <div class="sepet-satir">
       <div class="ust"><span>${s.ad}</span><span>${tl(s.birim*s.adet)}</span></div>
       ${s.detaylar.length?`<ul>${s.detaylar.map(d=>`<li>${d}</li>`).join("")}</ul>`:""}
       <div class="alt">
         <div class="adet">
-          <button type="button" onclick="satirAdet('${s.anahtar.replace(/'/g,"\\'")}',-1)">−</button>
+          <button type="button" onclick="satirAdet('${esc(s.anahtar)}',-1)">−</button>
           <span>${s.adet}</span>
-          <button type="button" onclick="satirAdet('${s.anahtar.replace(/'/g,"\\'")}',1)">+</button>
+          <button type="button" onclick="satirAdet('${esc(s.anahtar)}',1)">+</button>
         </div>
-        <button type="button" class="sil" onclick="satirSil('${s.anahtar.replace(/'/g,"\\'")}')">Kaldır</button>
+        <button type="button" class="sil" onclick="satirSil('${esc(s.anahtar)}')">Kaldır</button>
       </div>
     </div>`).join("") : `<div class="bos">Sepetiniz boş. Menüden ürün ekleyin 🍽️</div>`;
 
@@ -495,15 +502,11 @@ function sepetGuncelle(animasyon){
   }
 }
 
-/* ==========================================================
-   PANEL
-   ========================================================== */
+/* ================= PANEL ================= */
 function panelAc(){ document.getElementById("panelArka").classList.add("goster"); document.body.style.overflow="hidden"; }
 function panelKapat(){ document.getElementById("panelArka").classList.remove("goster"); document.body.style.overflow=""; }
 
-/* ==========================================================
-   KONUM (GPS + Harita)
-   ========================================================== */
+/* ================= KONUM ================= */
 function konumYaz(lat,lng){
   konum = { lat:+lat.toFixed(6), lng:+lng.toFixed(6) };
   const d = document.getElementById("konumDurum");
@@ -519,8 +522,7 @@ function konumSil(){
   if(isaret){ harita.removeLayer(isaret); isaret=null; }
 }
 function haritaAc(merkez){
-  const el = document.getElementById("harita");
-  el.classList.add("goster");
+  document.getElementById("harita").classList.add("goster");
   if(!harita){
     harita = L.map("harita").setView(merkez || SILIFKE_MERKEZ, merkez?17:14);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(harita);
@@ -533,44 +535,42 @@ function haritaAc(merkez){
 function isaretKoy(lat,lng){
   if(!isaret){
     isaret = L.marker([lat,lng],{draggable:true}).addTo(harita);
-    isaret.on("dragend", ()=>{
-      const p = isaret.getLatLng();
-      konumYaz(p.lat, p.lng);
-    });
+    isaret.on("dragend", ()=>{ const p = isaret.getLatLng(); konumYaz(p.lat, p.lng); });
   } else {
     isaret.setLatLng([lat,lng]);
   }
   konumYaz(lat,lng);
 }
-
 function konumBul(){
   const d = document.getElementById("konumDurum");
-  if(!navigator.geolocation){
-    d.textContent = "Tarayıcınız konum özelliğini desteklemiyor. Haritadan seçebilirsiniz.";
-    return;
-  }
+  if(!navigator.geolocation){ d.textContent = "Tarayıcınız konum özelliğini desteklemiyor. Haritadan seçebilirsiniz."; return; }
   d.textContent = "📡 Konum alınıyor...";
   navigator.geolocation.getCurrentPosition(
     p => haritaAc([p.coords.latitude, p.coords.longitude]),
-    err => {
-      d.textContent = err.code === 1
-        ? "Konum izni verilmedi. 'Haritada Seç' ile işaretleyebilirsiniz."
-        : "Konum alınamadı. 'Haritada Seç' ile işaretleyebilirsiniz.";
-    },
+    err => { d.textContent = err.code===1 ? "Konum izni verilmedi. 'Haritada Seç' ile işaretleyebilirsiniz." : "Konum alınamadı. 'Haritada Seç' ile işaretleyebilirsiniz."; },
     { enableHighAccuracy:true, timeout:10000 }
   );
 }
 
-/* ==========================================================
-   FORM DOĞRULAMA + WHATSAPP MESAJI
-   ========================================================== */
+/* ================= SİPARİŞ TÜRÜ ================= */
+function siparisTuru(){ return document.querySelector('input[name="tur"]:checked').value; }
+
+function turDegisti(){
+  const gelal = siparisTuru()==="gelal";
+  document.getElementById("teslimatAlanlari").classList.toggle("gizli", gelal);
+  document.getElementById("gelalBilgi").classList.toggle("goster", gelal);
+  document.querySelectorAll(".tur-secim label.tur").forEach(l=>
+    l.classList.toggle("secili", l.querySelector("input").checked));
+  if(gelal) document.getElementById("alan-adres").classList.remove("gecersiz");
+}
+
+/* ================= FORM + WHATSAPP ================= */
 function alanKontrol(id){
   const alan = document.getElementById("alan-"+id);
   const deger = document.getElementById(id).value.trim();
   alan.classList.toggle("gecersiz", deger==="");
   return deger!=="";
 }
-
 ["ad","soyad","adres"].forEach(id=>{
   document.getElementById(id).addEventListener("input", ()=>alanKontrol(id));
 });
@@ -579,7 +579,9 @@ document.getElementById("siparisForm").addEventListener("submit", e=>{
   e.preventDefault();
   if(sepet.length===0){ alert("Sepetiniz boş."); return; }
 
-  const gecerli = ["ad","soyad","adres"].map(alanKontrol).every(Boolean);
+  const gelal   = siparisTuru()==="gelal";
+  const zorunlu = gelal ? ["ad","soyad"] : ["ad","soyad","adres"];
+  const gecerli = zorunlu.map(alanKontrol).every(Boolean);
   if(!gecerli){
     document.querySelector(".alan.gecersiz").scrollIntoView({behavior:"smooth",block:"center"});
     return;
@@ -589,11 +591,13 @@ document.getElementById("siparisForm").addEventListener("submit", e=>{
   const soyad = document.getElementById("soyad").value.trim();
   const adres = document.getElementById("adres").value.trim();
   const not   = document.getElementById("not").value.trim();
-
   const tarih = new Date().toLocaleString("tr-TR",{dateStyle:"short",timeStyle:"short"});
 
   let m = `🍽️ *ŞEF KURŞUN – YENİ SİPARİŞ*\n`;
   m += `📅 ${tarih}\n`;
+  m += gelal
+    ? `📦 *Sipariş Türü:* 🏪 MÜŞTERİ GELİP ALACAK\n`
+    : `📦 *Sipariş Türü:* 🛵 ADRESE TESLİM EDİLECEK\n`;
   m += `━━━━━━━━━━━━━━━━\n\n`;
 
   sepet.forEach((s,i)=>{
@@ -606,27 +610,30 @@ document.getElementById("siparisForm").addEventListener("submit", e=>{
   m += `💰 *TOPLAM: ${tl(toplamHesapla())}*\n`;
   m += `━━━━━━━━━━━━━━━━\n\n`;
   m += `👤 *Ad Soyad:* ${ad} ${soyad}\n`;
-  m += `📍 *Adres:* ${adres}\n`;
-  if(konum) m += `🗺️ *Konum:* https://maps.google.com/?q=${konum.lat},${konum.lng}\n`;
-  if(not)   m += `📝 *Not:* ${not}\n`;
+  if(!gelal){
+    m += `📍 *Adres:* ${adres}\n`;
+    if(konum) m += `🗺️ *Konum:* https://maps.google.com/?q=${konum.lat},${konum.lng}\n`;
+  } else {
+    m += `🏪 *Teslim:* Müşteri restorandan alacak\n`;
+  }
+  if(not) m += `📝 *Not:* ${not}\n`;
   m += `\n_Bu sipariş sefkursunrestoran.com üzerinden oluşturuldu._`;
 
-  const url = `https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(m)}`;
-  window.open(url, "_blank");
+  window.open(`https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(m)}`, "_blank");
 });
 
-/* ==========================================================
-   BAŞLAT
-   ========================================================== */
+/* ================= BAŞLAT ================= */
 (function(){
   menuCiz();
   sepetGuncelle();
+  turDegisti();
 
-  if(new Date().getDay()===0){                  // 0 = Pazar
+  if(new Date().getDay()===0){
     document.getElementById("uyari").classList.add("goster");
     if(PAZAR_SIPARIS_ENGELLE){
-      document.getElementById("gonderBtn").disabled = true;
-      document.getElementById("gonderBtn").textContent = "Pazar günü sipariş alınmamaktadır";
+      const b = document.getElementById("gonderBtn");
+      b.disabled = true;
+      b.textContent = "Pazar günü sipariş alınmamaktadır";
     }
   }
 })();
