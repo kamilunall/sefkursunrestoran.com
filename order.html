@@ -126,7 +126,7 @@
 
 <nav class="kategoriler">
   <a href="#durumler">🥙 Dürümler</a>
-  <a href="#tabaklar">🍛 Tabaklar</a>
+  <a href="#tabaklar">🍛 Tabaklar & Çorbalar</a>
   <a href="#sikmalar">🥞 Sıkma & Börek</a>
   <a href="#yan">🥗 Yan Ürünler</a>
   <a href="#icecekler">🥤 İçecekler</a>
@@ -226,8 +226,8 @@ const WHATSAPP_NO = "905073702399";
 const PAZAR_SIPARIS_ENGELLE = false;
 const SILIFKE_MERKEZ = [36.3778, 33.9344];
 
-/* ================= MENÜ VERİSİ ================= */
-const MALZEME_SECENEKLERI = ["Soğan olmasın", "Maydanoz olmasın", "Ketçap olmasın", "Mayonez olmasın"];
+/* ================= MENÜ VERİSİ (POS v5.5 Güncel Fiyatlar) ================= */
+const MALZEME_SECENEKLERI = ["Soğan olmasın", "Maydanoz olmasın", "Domates olmasın", "Marul olmasın", "Ketçap olmasın", "Mayonez olmasın"];
 const LAVAS_SECENEKLERI = [
   { ad:"Tek Lavaş",   ek:0 },
   { ad:"Çift Lavaş",  ek:10 },
@@ -235,21 +235,31 @@ const LAVAS_SECENEKLERI = [
 ];
 
 const ICECEKLER = [
-  { id:"cay",           ad:"Çay",                               fiyat:10 },
-  { id:"su",            ad:"Su 0.5L",                           fiyat:15 },
-  { id:"soda",          ad:"Soda / Maden Suyu",                 fiyat:30 },
-  { id:"ayran",         ad:"Ayran (Kapalı / Açık)",             fiyat:30 },
-  { id:"msoda",         ad:"Meyveli Soda",                      fiyat:45 },
-  { id:"cam-kola",      ad:"Sarıyer Kola (Cam Şişe)",           fiyat:50 },
-  { id:"cam-gazoz",     ad:"Sarıyer Gazoz (Cam Şişe)",          fiyat:50 },
-  { id:"cam-portakal",  ad:"Sarıyer Portakal (Cam Şişe)",       fiyat:50 },
-  { id:"cam-mandalina", ad:"Sarıyer Mandalina (Cam Şişe)",      fiyat:50 },
-  { id:"salgam",        ad:"Şalgam (Sade / Acılı)",             fiyat:50 },
-  { id:"kutu",          ad:"Kutu İçecek (Sarıyer & Soğuk Çay)", fiyat:60 },
-  { id:"pepsi",         ad:"Kutu Kola (Pepsi)",                 fiyat:70 },
-  { id:"p1",            ad:"1 Lt Pepsi / Yedigün",              fiyat:75 },
-  { id:"p15",           ad:"1.5 Lt Pepsi / Yedigün",            fiyat:90 },
-  { id:"p25",           ad:"2.5 Lt Pepsi / Yedigün",            fiyat:130 }
+  { id:"cay",           ad:"Çay",                        fiyat:10 },
+  { id:"su",            ad:"Su 0.50Lt",                  fiyat:15 },
+  { id:"ayran-kapali",  ad:"Ayran (Kapalı)",             fiyat:25 },
+  { id:"ayran-acik",    ad:"Ayran (Açık)",               fiyat:25 },
+  { id:"soda",          ad:"Soda",                       fiyat:30 },
+  { id:"msoda",         ad:"Meyveli Soda",               fiyat:40 },
+  { id:"salgam",        ad:"Şalgam",                     fiyat:40 },
+  { id:"salgam-acili",  ad:"Şalgam (Acılı)",             fiyat:40 },
+  { id:"cam-kola",      ad:"Cam Kola (Sarıyer)",         fiyat:50 },
+  { id:"cam-gazoz",     ad:"Cam Gazoz",                  fiyat:50 },
+  { id:"cam-portakal",  ad:"Cam Portakal (Sarıyer)",     fiyat:50 },
+  { id:"cam-mandalina", ad:"Cam Mandalina (Sarıyer)",    fiyat:50 },
+  { id:"kucuk-kutu",    ad:"Küçük Kutu (Pepsi)",         fiyat:50 },
+  { id:"kutu-kola-p",   ad:"Kutu Kola (Pepsi)",          fiyat:60 },
+  { id:"kutu-kola-s",   ad:"Kutu Kola (Sarıyer)",        fiyat:60 },
+  { id:"kutu-gazoz",    ad:"Kutu Gazoz (Sarıyer)",       fiyat:60 },
+  { id:"kutu-portakal", ad:"Kutu Portakal (Sarıyer)",    fiyat:60 },
+  { id:"kutu-mandalina",ad:"Kutu Mandalina (Sarıyer)",   fiyat:60 },
+  { id:"kutu-soguk",    ad:"Kutu Soğuk Çay",             fiyat:60 },
+  { id:"p1",            ad:"1 Lt Pepsi",                 fiyat:80 },
+  { id:"y1",            ad:"1 Lt Yedigün",               fiyat:80 },
+  { id:"p15",           ad:"1.5 Lt Pepsi",               fiyat:90 },
+  { id:"y15",           ad:"1.5 Lt Yedigün",             fiyat:90 },
+  { id:"p25",           ad:"2.5 Lt Pepsi",               fiyat:130 },
+  { id:"y25",           ad:"2.5 Lt Yedigün",             fiyat:130 }
 ];
 
 const KATEGORILER = [
@@ -257,47 +267,58 @@ const KATEGORILER = [
     id:"durumler", baslik:"🥙 Dürümler",
     secenekli:true, lavas:true, malzeme:true, icecek:true,
     urunler:[
-      { id:"tavuk-doner",   ad:"Tavuk Döner Dürüm",   fiyat:160, etiket:"",          aciklama:"Özel soslu taze tavuk döner, çıtır lavaşta." },
-      { id:"antakya-doner", ad:"Antakya Döner",       fiyat:180, etiket:"Popüler",   aciklama:"Bol soslu, özel baharatlı ve patates kızartmalı Antakya usulü dürüm." },
-      { id:"tavuk-tantuni", ad:"Tavuk Tantuni Dürüm", fiyat:180, etiket:"",          aciklama:"Pamuk gibi pişmiş tavuk eti, sumaklı soğan, domates ve taze maydanozla." },
-      { id:"et-tantuni",    ad:"Et Tantuni Dürüm",    fiyat:280, etiket:"Çok Satan", aciklama:"Geleneksel sacda pişen %100 kuzu eti, soğan ve domatesle incecik lavaşta." }
+      { id:"tavuk-doner",     ad:"Tavuk Döner Dürüm",     fiyat:160, etiket:"",        aciklama:"Özel soslu taze tavuk döner, çıtır lavaşta." },
+      { id:"uc-ceyrek-doner", ad:"3 Çeyrek Döner",        fiyat:240, etiket:"Popüler", aciklama:"Doyurucu 3 çeyrek ekmek arası tavuk döner." },
+      { id:"antakya-doner",   ad:"Antakya Döner",         fiyat:180, etiket:"Popüler", aciklama:"Bol soslu, özel baharatlı ve patates kızartmalı Antakya usulü dürüm." },
+      { id:"tavuk-tantuni",   ad:"Tavuk Tantuni Dürüm",   fiyat:160, etiket:"",        aciklama:"Pamuk gibi pişmiş tavuk eti, sumaklı soğan, domates ve taze maydanozla." },
+      { id:"uc-ceyrek-tt",    ad:"3 Çeyrek Tavuk Tantuni",fiyat:240, etiket:"",        aciklama:"Özel 3 çeyrek ekmekte tavuk tantuni keyfi." },
+      { id:"et-tantuni",      ad:"Et Tantuni Dürüm",      fiyat:250, etiket:"Çok Satan", aciklama:"Geleneksel sacda pişen kuzu eti, soğan ve domatesle incecik lavaşta." },
+      { id:"uc-ceyrek-et",    ad:"3 Çeyrek Et Tantuni",   fiyat:375, etiket:"Gurme",   aciklama:"3 çeyrek ekmek içinde bol et tantuni." }
     ]
   },
   {
-    id:"tabaklar", baslik:"🍛 Tabaklar",
+    id:"tabaklar", baslik:"🍛 Tabaklar & Çorbalar",
     secenekli:true, lavas:false, malzeme:true, icecek:true,
     urunler:[
-      { id:"yog-tavuk-tantuni", ad:"Yoğurtlu Tavuk Tantuni", fiyat:220, etiket:"",             aciklama:"Dilimlenmiş tavuk tantuni, süzme yoğurt ve kızgın tereyağ sosuyla." },
-      { id:"yog-et-tantuni",    ad:"Yoğurtlu Et Tantuni",    fiyat:320, etiket:"Gurme",        aciklama:"Yoğurt yatağında tereyağlı ve soslu et tantuni şöleni." },
-      { id:"pilav-ustu-doner",  ad:"Pilav Üstü Tavuk Döner", fiyat:280, etiket:"Şefin Seçimi", aciklama:"Tereyağlı pilav üzerinde tavuk döner, patates kızartması ve salata ile." }
+      { id:"pilav-ustu-doner",  ad:"Pilav Üstü Tavuk Döner",   fiyat:250, etiket:"Şefin Seçimi", aciklama:"Tereyağlı pilav üzerinde tavuk döner, patates kızartması ile." },
+      { id:"yog-tavuk-tantuni", ad:"Yoğurtlu Tavuk Tantuni",     fiyat:190, etiket:"",             aciklama:"Dilimlenmiş tavuk tantuni, süzme yoğurt ve kızgın tereyağ sosuyla." },
+      { id:"yog-et-tantuni",    ad:"Yoğurtlu Et Tantuni",      fiyat:280, etiket:"Gurme",        aciklama:"Yoğurt yatağında tereyağlı ve soslu et tantuni şöleni." },
+      { id:"mercimek",          ad:"Mercimek Çorbası",         fiyat:100, etiket:"",             aciklama:"Sıcak, nefis ev usulü mercimek çorbası." },
+      { id:"tavuk-corbasi",     ad:"Tavuk Çorbası (Arabaşı)",  fiyat:130, etiket:"",             aciklama:"Şifa deposu geleneksel tavuk çorbası." },
+      { id:"paca",              ad:"Paça",                     fiyat:200, etiket:"Özel",         aciklama:"Geleneksel lezzet paça çorbası." },
+      { id:"etli-nohut",        ad:"Etli Nohut",               fiyat:120, etiket:"",             aciklama:"Tane tane etli nohut yemeği." },
+      { id:"kuru-fasulye",      ad:"Kuru Fasulye",             fiyat:120, etiket:"",             aciklama:"Geleneksel soslu kuru fasulye." },
+      { id:"taze-fasulye",      ad:"Taze Fasulye",             fiyat:120, etiket:"",             aciklama:"Zeytinyağlı taze fasulye." }
     ]
   },
   {
     id:"sikmalar", baslik:"🥞 Sıkma & Börekler",
     secenekli:false,
     urunler:[
-      { id:"bazlama",       ad:"Sade Bazlama",                    fiyat:25 },
-      { id:"pat-sikma",     ad:"Patatesli Sıkma",                 fiyat:60 },
-      { id:"kasar-sikma",   ad:"Kaşar Peynirli Sıkma",            fiyat:80 },
-      { id:"cokelek-sikma", ad:"Çökelekli Sıkma",                 fiyat:80 },
-      { id:"deri-sikma",    ad:"Deri Peynirli Sıkma",             fiyat:100 },
-      { id:"pat-borek",     ad:"Patatesli Börek",                 fiyat:100 },
-      { id:"ispanak-borek", ad:"Ispanaklı Börek",                 fiyat:100 },
-      { id:"cokelek-borek", ad:"Çökelekli Börek",                 fiyat:100 },
-      { id:"kasar-borek",   ad:"Kaşar Peynirli Börek",            fiyat:110 },
-      { id:"deri-borek",    ad:"Deri Peynirli Börek",             fiyat:125 },
-      { id:"karisik-ik",    ad:"Karışık Börek (Ispanak + Kaşar)", fiyat:130 },
-      { id:"karisik-pk",    ad:"Karışık Börek (Patates + Kaşar)", fiyat:130 }
+      { id:"bazlama",       ad:"Sade Bazlama",                  fiyat:25  },
+      { id:"pat-sikma",     ad:"Patatesli Sıkma",               fiyat:60  },
+      { id:"kasar-sikma",   ad:"Kaşar Peynirli Sıkma",          fiyat:80  },
+      { id:"cokelek-sikma", ad:"Çökelekli Sıkma",               fiyat:80  },
+      { id:"deri-sikma",    ad:"Deri Peynirli Sıkma",           fiyat:100 },
+      { id:"pat-borek",     ad:"Patatesli Börek",               fiyat:100 },
+      { id:"ispanak-borek", ad:"Ispanaklı Börek",               fiyat:100 },
+      { id:"cokelek-borek", ad:"Çökelekli Börek",               fiyat:100 },
+      { id:"kasar-borek",   ad:"Kaşar Peynirli Börek",          fiyat:110 },
+      { id:"deri-borek",    ad:"Deri Peynirli Börek",           fiyat:125 },
+      { id:"karisik-ik",    ad:"Karışık Börek (Isp+Kaş)",       fiyat:130 },
+      { id:"karisik-pk",    ad:"Karışık Börek (Patates+Kaşar)", fiyat:130 }
     ]
   },
   {
     id:"yan", baslik:"🥗 Yan Ürünler",
     secenekli:false,
     urunler:[
-      { id:"pilav",  ad:"Pirinç Pilavı", fiyat:50, aciklama:"Tane tane, bol tereyağlı." },
-      { id:"yogurt", ad:"Yoğurt",        fiyat:70, aciklama:"Taşeli, kase yoğurt." },
-      { id:"cacik",  ad:"Cacık",         fiyat:50 },
-      { id:"salata", ad:"Salata",        fiyat:50, aciklama:"Mevsim yeşillikleri ve domatesle söğüş." }
+      { id:"pilav",   ad:"Pirinç Pilavı",       fiyat:50,  aciklama:"Tane tane, bol tereyağlı." },
+      { id:"yogurt",  ad:"Yoğurt",              fiyat:50,  aciklama:"Kase yoğurt." },
+      { id:"cacik",   ad:"Cacık",               fiyat:50,  aciklama:"Serinletici ev yapımı cacık." },
+      { id:"salata",  ad:"Salata",              fiyat:30,  aciklama:"Mevsim yeşillikleri ile söğüş." },
+      { id:"patso",   ad:"Patso",               fiyat:80,  aciklama:"Ekmek arası patates kızartması." },
+      { id:"patates", ad:"Patates Kızartması",  fiyat:80,  aciklama:"Çıtır patates kızartması tabağı." }
     ]
   },
   {
@@ -349,10 +370,9 @@ function secenekliKart(kat,u){
 
   const lavasHTML = kat.lavas ? `
     <div class="secenek-grup">
-      <h4>Lavaş Seçimi</h4>
+      <h4>Lavaş / Ekmek Seçimi</h4>
       ${LAVAS_SECENEKLERI.map((l,i)=>`
-        <label><input type="radio" name="lavas-${u.id}" value="${i}" ${i===0?"checked":""}> ${l.ad}
-          ${l.ek?`<span class="ek">+${l.ek} ₺</span>`:""}</label>`).join("")}
+        <label><input type="radio" name="lavas-${u.id}" value="${i}" ${i===0?"checked":""}> ${l.ad}${l.ek?`<span class="ek">+${l.ek} ₺</span>`:""}</label>`).join("")}
     </div>` : "";
 
   const icecekHTML = kat.icecek ? `
@@ -596,13 +616,13 @@ document.getElementById("siparisForm").addEventListener("submit", e=>{
   let m = `🍽️ *ŞEF KURŞUN – YENİ SİPARİŞ*\n`;
   m += `📅 ${tarih}\n`;
   m += gelal
-    ? `📦 *Sipariş Türü:* 🏪 MÜŞTERİ GELİP ALACAK\n`
+    ? `📦 *Sipariş Türü:* 🏪 MÜŞTERİ GELİp ALACAK\n`
     : `📦 *Sipariş Türü:* 🛵 ADRESE TESLİM EDİLECEK\n`;
   m += `━━━━━━━━━━━━━━━━\n\n`;
 
   sepet.forEach((s,i)=>{
     m += `*${i+1}. ${s.adet}x ${s.ad}* — ${tl(s.birim*s.adet)}\n`;
-    s.detaylar.forEach(d => m += `   • ${d}\n`);
+    s.detaylar.forEach(d => m += `    • ${d}\n`);
     m += `\n`;
   });
 
