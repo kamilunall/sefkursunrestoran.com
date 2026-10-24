@@ -3,86 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>İletişim ve Adres | Şef Kurşun Restoran - Silifke</title>
-  <meta name="description" content="Şef Kurşun Restoran'ın yeni adresi: Saray, 129. Sk. No:38, 33950 Silifke/Mersin. Telefon, WhatsApp sipariş hattı ve yol tarifi.">
+  <title>İletişim & Konum | Şef Kurşun Restoran - Silifke</title>
+  <meta name="description" content="Şef Kurşun Restoran yeni adresi: Saray, 129. Sk. No:38, 33950 Silifke/Mersin. Telefon, WhatsApp sipariş hattı ve Google Haritalar yol tarifi.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bitter:wght@400;500;600;700&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
   <style>
-    .sayfa-bas { padding: 56px 0 32px; }
-    .sayfa-bas h1 { font-size: clamp(2.3rem, 5.5vw, 3.8rem); margin-top: 12px; }
-    .sayfa-bas .el-yazisi { margin-top: 10px; display: inline-block; transform: rotate(-1.5deg); }
-
-    .izgara { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: stretch; }
-    .fis { padding: 30px 28px 34px; }
-    .satir { padding: 16px 0; border-bottom: 2px dashed var(--cizgi); }
-    .satir:first-child { padding-top: 0; }
-    .satir:last-of-type { border-bottom: 0; }
-    .satir h2 { font-family: var(--f-fis); font-weight: 500; font-size: .76rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bordo); margin-bottom: 4px; }
-    .satir p, .satir a { font-size: 1.1rem; }
-    .satir .buyuk { font-family: var(--f-tabela); font-size: 1.6rem; text-decoration: none; letter-spacing: .5px; }
-    .dugmeler { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
-    .dugmeler .dugme { justify-content: center; }
-
-    .harita { border: 2px solid var(--murekkep); box-shadow: 6px 6px 0 var(--murekkep); min-height: 460px; background: var(--kagit-koyu); }
-    .harita iframe { width: 100%; height: 100%; min-height: 460px; border: 0; display: block; }
-
+    .sayfa-bas { padding: 110px 0 70px; text-align: center; }
+    .sayfa-bas .susleme { justify-content: center; margin-bottom: 26px; }
+    .sayfa-bas h1 { font-size: clamp(2.8rem, 6vw, 4.8rem); margin-top: 18px; }
+    .sayfa-bas p { margin-top: 16px; }
+    .izgara { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; align-items: stretch; padding-bottom: 120px; }
+    .satir { padding: 26px 0; border-bottom: 1px solid var(--cizgi-acik); }
+    .satir:first-child { border-top: 1px solid var(--cizgi-acik); }
+    .satir .ust-yazi { display: block; margin-bottom: 8px; }
+    .satir p, .satir a { font-size: 1.05rem; }
+    .satir .buyuk { font-family: var(--f-baslik); font-size: 2.1rem; font-weight: 500; text-decoration: none; letter-spacing: .02em; }
+    .satir a { text-underline-offset: 4px; }
+    .dugmeler { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+    .harita { position: relative; min-height: 520px; background: var(--fildisi-2); }
+    .harita::before { content: ""; position: absolute; inset: -16px 16px 16px -16px; border: 1px solid var(--pirinc); opacity: .6; pointer-events: none; }
+    .harita iframe { position: relative; width: 100%; height: 100%; min-height: 520px; border: 0; display: block; filter: grayscale(.6) contrast(1.05); }
     @media (max-width: 860px) {
-      .sayfa-bas { padding: 36px 0 24px; }
-      .izgara { grid-template-columns: 1fr; gap: 36px; }
-      .harita, .harita iframe { min-height: 340px; }
+      .sayfa-bas { padding: 80px 0 50px; }
+      .izgara { grid-template-columns: 1fr; gap: 56px; padding-bottom: 80px; }
+      .harita, .harita iframe { min-height: 360px; }
+      .harita { margin-left: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="duyuru"><b>Taşındık</b> Yeni yerimiz: Saray, 129. Sk. No:38, Silifke. <a href="#harita">Haritaya in</a></div>
+  <div class="duyuru"><b>Yeni adres</b> Saray, 129. Sk. No:38, Silifke · <a href="#harita">Haritada gör</a></div>
 
-  <header class="site-ust">
+  <header class="site-ust dolu">
     <div class="kap">
-      <a href="/" class="marka"><span><b>Şef Kurşun</b><small>Lokanta · Silifke</small></span></a>
+      <a href="/" class="marka"><b>Şef Kurşun</b><small>Restoran · Silifke</small></a>
       <ul class="menu-linkler">
         <li><a href="/">Ana Sayfa</a></li>
         <li><a href="/QRMENU/">Menü</a></li>
         <li><a href="/hakkimizda.html">Hakkımızda</a></li>
         <li><a href="/iletisim.html" aria-current="page">İletişim</a></li>
       </ul>
-      <a href="/order.html" class="dugme dugme-bordo dugme-kucuk">Sipariş Ver</a>
+      <a href="/order.html" class="dugme dugme-cizgi dugme-kucuk">Sipariş Ver</a>
     </div>
   </header>
 
   <main>
     <section class="sayfa-bas kap">
-      <span class="etiket-fis">İletişim</span>
-      <h1 class="baslik">Yeni yerimize buyurun.</h1>
-      <p class="el-yazisi">Taşındık ama tencereler aynı.</p>
+      <div class="susleme"><span></span></div>
+      <span class="ust-yazi">İletişim &amp; Konum</span>
+      <h1 class="baslik">Yeni adresimizde <em>sizi bekliyoruz</em></h1>
+      <p class="soluk">Restoranımız taşındı. Aynı mutfak, aynı ustalık; yeni yerimiz Saray'da.</p>
     </section>
 
     <section class="kap izgara">
-      <div class="fis">
+      <div>
         <div class="satir">
-          <h2>Adres</h2>
+          <span class="ust-yazi">Adres</span>
           <p>Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
         </div>
         <div class="satir">
-          <h2>Telefon ve WhatsApp</h2>
+          <span class="ust-yazi">Telefon &amp; Sipariş Hattı</span>
           <a class="buyuk" href="tel:05073702399">0507 370 23 99</a>
         </div>
         <div class="satir">
-          <h2>Saatler</h2>
-          <p>Pazartesi–Cumartesi 07:00–21:00<br>Pazar kapalı</p>
+          <span class="ust-yazi">Çalışma Saatleri</span>
+          <p>Pazartesi – Cumartesi · 07:00 – 21:00<br>Pazar kapalı</p>
         </div>
         <div class="satir">
-          <h2>Instagram ve e-posta</h2>
-          <p><a href="https://www.instagram.com/sefkursunsilifke" target="_blank" rel="noopener">@sefkursunsilifke</a><br>
-          <a href="mailto:sefkursunrestoran@gmail.com">sefkursunrestoran@gmail.com</a></p>
+          <span class="ust-yazi">E-posta &amp; Sosyal Medya</span>
+          <p><a href="mailto:sefkursunrestoran@gmail.com">sefkursunrestoran@gmail.com</a><br>
+          <a href="https://www.instagram.com/sefkursunsilifke" target="_blank" rel="noopener">@sefkursunsilifke</a></p>
         </div>
-
         <div class="dugmeler">
-          <a href="https://www.google.com/maps/search/?api=1&amp;query=%C5%9Eef%20Kur%C5%9Fun%20Restoran%2C%20Saray%2C%20129.%20Sk.%20No%3A38%2C%2033950%20Silifke%2FMersin" target="_blank" rel="noopener" class="dugme dugme-hardal">Google Haritalar'da yol tarifi</a>
-          <a href="https://wa.me/905073702399?text=Merhaba,%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener" class="dugme dugme-wa">WhatsApp'tan yaz</a>
-          <a href="tel:05073702399" class="dugme">Telefonla ara</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=%C5%9Eef%20Kur%C5%9Fun%20Restoran%2C%20Saray%2C%20129.%20Sk.%20No%3A38%2C%2033950%20Silifke%2FMersin" target="_blank" rel="noopener" class="dugme">Google Haritalar'da Yol Tarifi</a>
+          <a href="https://wa.me/905073702399?text=Merhaba,%20sipari%C5%9F%20vermek%20istiyorum." target="_blank" rel="noopener" class="dugme dugme-cizgi">WhatsApp ile İletişim</a>
         </div>
       </div>
 
@@ -95,25 +92,25 @@
   <footer class="site-alt">
     <div class="kap">
       <div>
-        <p class="baslik">Şef Kurşun</p>
-        <p>Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
+        <a href="/" class="marka"><b>Şef Kurşun</b><small>Restoran · Silifke</small></a>
+        <p style="margin-top:22px">Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
       </div>
       <div>
-        <h4>Ulaşın</h4>
+        <h4>İletişim</h4>
         <p><a href="tel:05073702399">0507 370 23 99</a><br>
         <a href="https://www.instagram.com/sefkursunsilifke" target="_blank" rel="noopener">@sefkursunsilifke</a><br>
         <a href="mailto:sefkursunrestoran@gmail.com">sefkursunrestoran@gmail.com</a></p>
       </div>
       <div>
-        <h4>Saatler</h4>
-        <p>Pzt–Cmt 07:00–21:00<br>Pazar kapalı</p>
+        <h4>Çalışma Saatleri</h4>
+        <p>Pazartesi – Cumartesi<br>07:00 – 21:00<br>Pazar kapalı</p>
       </div>
-      <p class="telif">© 2026 Şef Kurşun Restoran · Silifke</p>
+      <p class="telif">© 2026 Şef Kurşun Restoran · Silifke / Mersin. Tüm hakları saklıdır.</p>
     </div>
   </footer>
 
   <a href="/order.html" class="wa-sabit" aria-label="WhatsApp ile sipariş ver">
-    <span class="dugme dugme-wa">
+    <span class="dugme">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
       <span>Sipariş</span>
     </span>

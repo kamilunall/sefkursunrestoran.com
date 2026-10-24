@@ -3,212 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Şef Kurşun Restoran | Silifke Tantuni, Döner, Sıkma ve Ev Yemekleri</title>
-  <meta name="description" content="Silifke'de esnaf lokantası: sabah çorbası, öğlen tencere yemeği, sacda tantuni, elde açılan sıkma ve börek. Saray, 129. Sk. No:38. WhatsApp ile sipariş.">
+  <title>Şef Kurşun Restoran | Silifke Tantuni, Döner & Ev Yemekleri</title>
+  <meta name="description" content="Silifke'de Şef Kurşun Restoran: sacda Mersin tantuni, özel soslu Antakya döner, usta elinde açılan sıkma ve börekler, her gün taze pişen ev yemekleri. Saray, 129. Sk. No:38. WhatsApp ile sipariş.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bitter:wght@400;500;600;700&family=Caveat:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
   <style>
     /* GİRİŞ */
-    .giris { padding: 56px 0 72px; }
-    .giris .kap {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 56px;
-      align-items: start;
-    }
-    .giris h1 {
-      font-size: clamp(2.5rem, 6vw, 4.4rem);
-      color: var(--murekkep);
-      margin: 14px 0 22px;
-    }
-    .giris h1 em { font-style: normal; color: var(--bordo); }
-    .giris .ozet { font-size: 1.15rem; max-width: 34ch; color: var(--murekkep-acik); margin-bottom: 30px; }
-    .giris .dugmeler { display: flex; gap: 14px; flex-wrap: wrap; }
-    .giris .not { margin-top: 26px; transform: rotate(-2deg); display: inline-block; }
-
-    /* Tezgâh tahtası */
-    .tahta {
-      background: #24302a;
-      color: #f2ecdf;
-      border: 10px solid #6b4a2f;
-      border-radius: 4px;
-      padding: 26px 26px 22px;
-      box-shadow: 6px 6px 0 var(--murekkep);
-      transform: rotate(1deg);
-    }
-    .tahta h2 {
-      font-family: var(--f-el);
-      font-size: 2.1rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 14px;
-      text-align: center;
-    }
-    .tahta ul { list-style: none; }
-    .tahta li {
+    .giris {
+      background:
+        radial-gradient(ellipse at 70% 30%, rgba(184,149,90,.10), transparent 60%),
+        var(--gece);
+      color: var(--acik);
+      min-height: 92vh;
       display: flex;
-      align-items: baseline;
-      gap: 8px;
-      padding: 7px 0;
-      font-size: 1.02rem;
+      align-items: center;
+      padding: 150px 0 110px;
+      position: relative;
+      overflow: hidden;
     }
-    .tahta li::after {
+    .giris::after {
       content: "";
-      flex: 1;
-      order: 1;
-      border-bottom: 2px dotted rgba(255,255,255,.35);
+      position: absolute;
+      inset: 112px 28px 28px;
+      border: 1px solid var(--cizgi-koyu);
+      pointer-events: none;
     }
-    .tahta li span { order: 2; font-family: var(--f-el); font-size: 1.3rem; color: var(--hardal); }
-    .tahta p { margin-top: 14px; font-size: .85rem; color: #bfc7bf; text-align: center; }
+    .giris .kap { text-align: center; position: relative; z-index: 1; }
+    .giris .susleme { justify-content: center; margin: 0 auto 30px; }
+    .giris h1 { font-size: clamp(3rem, 7.4vw, 6.2rem); margin: 22px auto 30px; max-width: 14ch; }
+    .giris .ozet { max-width: 56ch; margin: 0 auto 46px; color: var(--acik-soluk); font-size: 1.08rem; }
+    .giris .dugmeler { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .giris .adres-not {
+      margin-top: 70px;
+      font-size: .74rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--acik-soluk);
+    }
+    .giris .adres-not b { color: var(--pirinc); font-weight: 400; }
 
-    /* NE VAR */
-    .bolum-baslik { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 26px; }
-    .bolum-baslik h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
-    .uclu { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--murekkep); background: #fffdf8; }
-    .uclu article { padding: 28px 26px 30px; }
-    .uclu article + article { border-left: 2px solid var(--murekkep); }
-    .uclu .saat { font-family: var(--f-fis); font-size: .78rem; letter-spacing: 1.5px; color: var(--bordo); text-transform: uppercase; }
-    .uclu h3 { font-family: var(--f-tabela); font-weight: 400; font-size: 1.45rem; margin: 6px 0 10px; }
-    .uclu p { color: var(--murekkep-acik); font-size: .98rem; }
+    /* MUTFAK */
+    .bas { text-align: center; margin-bottom: 70px; }
+    .bas h2 { font-size: clamp(2.3rem, 4.6vw, 3.6rem); margin-top: 16px; }
+    .bas p { max-width: 58ch; margin: 18px auto 0; }
+    .uclu { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--cizgi-acik); }
+    .uclu article { padding: 44px 36px 10px; }
+    .uclu article + article { border-left: 1px solid var(--cizgi-acik); }
+    .uclu .no { font-family: var(--f-baslik); font-style: italic; font-size: 1.15rem; color: var(--pirinc); }
+    .uclu h3 { font-family: var(--f-baslik); font-weight: 500; font-size: 1.9rem; line-height: 1.15; margin: 8px 0 14px; }
+    .uclu p { color: var(--metin-soluk); }
+    .tum-menu { text-align: center; margin-top: 64px; }
 
-    /* USTA */
-    .usta { margin-top: 80px; }
-    .usta .kap { display: grid; grid-template-columns: 220px 1fr; gap: 44px; align-items: center; }
-    .usta figure { background: #fff; padding: 10px 10px 34px; border: 1px solid var(--cizgi); box-shadow: 4px 4px 0 var(--kagit-koyu); transform: rotate(-3deg); }
-    .usta figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-    .usta figcaption { font-family: var(--f-el); font-size: 1.25rem; text-align: center; margin-top: 8px; }
-    .usta .soz { font-size: clamp(1.25rem, 2.6vw, 1.6rem); line-height: 1.45; font-weight: 500; max-width: 36ch; }
-    .usta .kim { margin-top: 16px; color: var(--murekkep-acik); }
-    .usta .kim a { font-weight: 700; color: var(--bordo); }
+    /* ŞEF */
+    .sef .kap { display: grid; grid-template-columns: 340px 1fr; gap: 90px; align-items: center; }
+    .sef figure { position: relative; }
+    .sef figure::before { content: ""; position: absolute; inset: -16px 16px 16px -16px; border: 1px solid var(--pirinc); opacity: .55; }
+    .sef figure img { position: relative; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.08) brightness(.92); }
+    .sef blockquote { font-family: var(--f-baslik); font-style: italic; font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.8rem); line-height: 1.25; margin: 20px 0 30px; }
+    .sef .imza { font-size: .76rem; letter-spacing: .26em; text-transform: uppercase; color: var(--acik-soluk); }
+    .sef .imza b { display: block; color: var(--acik); font-weight: 400; letter-spacing: .2em; margin-bottom: 4px; }
+    .sef p.soluk { margin-top: 26px; max-width: 54ch; }
+    .sef a.ok { display: inline-block; margin-top: 30px; color: var(--pirinc); font-size: .76rem; letter-spacing: .24em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid var(--pirinc); padding-bottom: 4px; }
 
-    /* BİLGİ FİŞİ */
-    .bilgi { margin-top: 80px; }
+    /* BİLGİ */
     .bilgi .fis { display: grid; grid-template-columns: repeat(3, 1fr); }
-    .bilgi .fis > div { padding: 26px 26px 30px; }
-    .bilgi .fis > div + div { border-left: 2px dashed var(--cizgi); }
-    .bilgi h3 { font-family: var(--f-fis); font-weight: 500; font-size: .78rem; letter-spacing: 2px; text-transform: uppercase; color: var(--bordo); margin-bottom: 10px; }
-    .bilgi p { font-size: .98rem; }
-    .bilgi p + p { margin-top: 6px; }
-    .bilgi .kucuk { color: var(--murekkep-acik); font-size: .88rem; }
+    .bilgi .fis > div { padding: 52px 40px; }
+    .bilgi .fis > div + div { border-left: 1px solid var(--cizgi-acik); }
+    .bilgi h3 { font-family: var(--f-baslik); font-weight: 500; font-size: 1.6rem; margin: 12px 0 14px; }
+    .bilgi p + p { margin-top: 8px; }
+    .bilgi a { color: var(--bordo); text-underline-offset: 4px; }
 
     @media (max-width: 860px) {
-      .giris { padding: 36px 0 52px; }
-      .giris .kap { grid-template-columns: 1fr; gap: 44px; }
-      .tahta { transform: none; }
+      .giris { min-height: 0; padding: 140px 0 80px; }
+      .giris::after { inset: 120px 12px 12px; }
+      .giris .adres-not { margin-top: 50px; line-height: 2; }
       .uclu, .bilgi .fis { grid-template-columns: 1fr; }
-      .uclu article + article { border-left: 0; border-top: 2px solid var(--murekkep); }
-      .bilgi .fis > div + div { border-left: 0; border-top: 2px dashed var(--cizgi); }
-      .usta .kap { grid-template-columns: 1fr; gap: 28px; justify-items: center; text-align: center; }
-      .usta figure { width: 190px; }
-      .usta .soz { margin: 0 auto; }
+      .uclu article { padding: 34px 6px 20px; }
+      .uclu article + article { border-left: 0; border-top: 1px solid var(--cizgi-acik); }
+      .bilgi .fis > div { padding: 36px 6px; }
+      .bilgi .fis > div + div { border-left: 0; border-top: 1px solid var(--cizgi-acik); }
+      .sef .kap { grid-template-columns: 1fr; gap: 56px; }
+      .sef figure { max-width: 280px; margin: 16px auto 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="duyuru"><b>Taşındık</b> Yeni yerimiz: Saray, 129. Sk. No:38, Silifke. <a href="/iletisim.html">Yol tarifi</a></div>
+  <div class="duyuru"><b>Yeni adres</b> Saray, 129. Sk. No:38, Silifke · <a href="/iletisim.html">Yol tarifi</a></div>
 
   <header class="site-ust">
     <div class="kap">
-      <a href="/" class="marka"><span><b>Şef Kurşun</b><small>Lokanta · Silifke</small></span></a>
+      <a href="/" class="marka"><b>Şef Kurşun</b><small>Restoran · Silifke</small></a>
       <ul class="menu-linkler">
         <li><a href="/" aria-current="page">Ana Sayfa</a></li>
         <li><a href="/QRMENU/">Menü</a></li>
         <li><a href="/hakkimizda.html">Hakkımızda</a></li>
         <li><a href="/iletisim.html">İletişim</a></li>
       </ul>
-      <a href="/order.html" class="dugme dugme-bordo dugme-kucuk">Sipariş Ver</a>
+      <a href="/order.html" class="dugme dugme-cizgi dugme-kucuk">Sipariş Ver</a>
     </div>
   </header>
 
   <main>
     <section class="giris">
       <div class="kap">
-        <div>
-          <span class="etiket-fis">Esnaf lokantası · 2025'ten beri</span>
-          <h1 class="baslik">Sabah çorba,<br>öğlen tencere,<br>akşam <em>tantuni.</em></h1>
-          <p class="ozet">Silifke'de ustası başında duran, yemeği her gün ocakta pişen bir lokanta. Gelin oturun ya da WhatsApp'tan yazın, kapınıza gelsin.</p>
-          <div class="dugmeler">
-            <a href="/order.html" class="dugme dugme-wa">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-              WhatsApp'tan Sipariş
-            </a>
-            <a href="/QRMENU/" class="dugme">Menü ve Fiyatlar</a>
-          </div>
-          <p class="not el-yazisi">Pazartesi paça var, erken gelen kapar!</p>
+        <div class="susleme"><span></span></div>
+        <span class="ust-yazi">Silifke · Mersin</span>
+        <h1 class="baslik">Ustalıkla pişen, <em>helal</em> sofralar</h1>
+        <p class="ozet">Geleneksel sacda Mersin tantunisi, özel soslu Antakya döner, usta elinde açılan sıcak sıkmalar ve her gün taze pişen ev yemekleri.</p>
+        <div class="dugmeler">
+          <a href="/QRMENU/" class="dugme">Menüyü İncele</a>
+          <a href="/order.html" class="dugme dugme-cizgi">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            WhatsApp ile Sipariş
+          </a>
         </div>
-
-        <aside class="tahta" aria-label="Tezgâhta neler var">
-          <h2>Tezgâhta bugün</h2>
-          <ul>
-            <li>Mercimek çorbası <span>her gün</span></li>
-            <li>Günün tencere yemeği <span>öğlen</span></li>
-            <li>Et ve tavuk tantuni <span>sacda</span></li>
-            <li>Tavuk döner, Antakya usulü <span>dürüm</span></li>
-            <li>Sıkma ve sac böreği <span>elde açma</span></li>
-            <li>Paça çorbası <span>Pazartesi</span></li>
-          </ul>
-          <p>Güncel fiyatlar menüde yazıyor.</p>
-        </aside>
+        <p class="adres-not"><b>Pazartesi – Cumartesi</b> 07:00 – 21:00 &nbsp;·&nbsp; Saray, 129. Sk. No:38</p>
       </div>
     </section>
 
-    <section class="kap">
-      <div class="bolum-baslik">
-        <h2 class="baslik">Ne yenir burada?</h2>
-        <a href="/QRMENU/" class="dugme dugme-kucuk">Tüm menü</a>
-      </div>
-      <div class="uclu">
-        <article>
-          <span class="saat">Sacdan</span>
-          <h3>Tantuni &amp; döner</h3>
-          <p>Kuzu etinden et tantuni, tavuk tantuni ve kendi sosumuzla Antakya usulü tavuk döner. İster dürüm, ister yoğurtlu tabak.</p>
-        </article>
-        <article>
-          <span class="saat">Elden</span>
-          <h3>Sıkma &amp; börek</h3>
-          <p>Hamuru elde açılır, sacda pişer. Patatesli, kaşarlı, çökelekli, deri peynirli; böreklerde ıspanaklı da var.</p>
-        </article>
-        <article>
-          <span class="saat">Ocaktan</span>
-          <h3>Tencere yemekleri</h3>
-          <p>Etli nohut, kuru fasulye, taze fasulye, tereyağlı pilav. Yanına cacık ya da yoğurt. Esnafın öğle tabağı.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="usta">
+    <section class="bolum">
       <div class="kap">
-        <figure>
-          <img src="/kemal-kursun.jpg" alt="Şef Kemal Fatih Kurşun">
-          <figcaption>Kemal Usta</figcaption>
-        </figure>
+        <div class="bas">
+          <span class="ust-yazi">Mutfağımız</span>
+          <h2 class="baslik">Her gün, aynı özenle</h2>
+          <p class="soluk">Lezzeti, hijyeni ve helal et hassasiyetini samimi bir esnaf ustalığıyla bir araya getiriyoruz.</p>
+        </div>
+        <div class="uclu">
+          <article>
+            <span class="no">i.</span>
+            <h3>Mersin Tantuni &amp; Döner</h3>
+            <p>%100 küçükbaş kuzu etinden hazırlanan et tantuni, tavuk tantuni ve özel soslu Antakya döner çeşitleri.</p>
+          </article>
+          <article>
+            <span class="no">ii.</span>
+            <h3>Sıkma &amp; Sac Böreği</h3>
+            <p>Hamuru usta elinde, tek tek açılır; sacda pişirilir. Deri peynirli, çökelekli, kaşarlı ve patatesli sıkmalar ile ıspanaklı börekler.</p>
+          </article>
+          <article>
+            <span class="no">iii.</span>
+            <h3>Ev Yemekleri</h3>
+            <p>Süzme mercimek çorbası, Pazartesi günleri paça, etli kuru fasulye, etli nohut ve tereyağlı pirinç pilavı.</p>
+          </article>
+        </div>
+        <div class="tum-menu"><a href="/QRMENU/" class="dugme dugme-cizgi">Tüm Menü ve Fiyatlar</a></div>
+      </div>
+    </section>
+
+    <section class="bolum koyu sef">
+      <div class="kap">
+        <figure><img src="/kemal-kursun.jpg" alt="Şef Kemal Fatih Kurşun"></figure>
         <div>
-          <p class="soz">27 yıl otel ve yurt mutfaklarında çalıştı, emekli oldu, durmadı. Nisan 2025'te kendi lokantasını açtı. Evine ne pişiriyorsa tezgâha da onu koyuyor.</p>
-          <p class="kim">Şef Kemal Fatih Kurşun · <a href="/hakkimizda.html">Hikâyemiz</a></p>
+          <span class="ust-yazi">Kurucu &amp; Başşef</span>
+          <blockquote>“Sofraya sunulan her lokmanın lezzeti kadar güvenilirliği de önemlidir.”</blockquote>
+          <p class="imza"><b>Kemal Fatih Kurşun</b>27 yıllık mutfak tecrübesi</p>
+          <p class="soluk">Otellerden öğrenci yurtlarına uzanan çeyrek asrı aşkın meslek hayatının ardından Şef Kemal Fatih Kurşun, Nisan 2025'te Şef Kurşun Restoran'ı Silifke'de hayata geçirdi.</p>
+          <a href="/hakkimizda.html" class="ok">Hikâyemiz</a>
         </div>
       </div>
     </section>
 
-    <section class="bilgi kap">
-      <div class="fis">
-        <div>
-          <h3>Saatler</h3>
-          <p><b>Pazartesi–Cumartesi</b><br>07:00 – 21:00</p>
-          <p><b>Pazar</b> kapalı</p>
-          <p class="kucuk">Çorba ve sıkma sabahın ilk saatinden.</p>
-        </div>
-        <div>
-          <h3>Adres</h3>
-          <p>Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
-          <p><a href="/iletisim.html"><b>Haritada gör</b></a></p>
-        </div>
-        <div>
-          <h3>Nereden alıyoruz</h3>
-          <p>Kuzu eti Silifke Lezzet A.Ş.'den, tavuk Akdeniz Toros'tan, yoğurt, ayran ve peynirler Taşeli markasından gelir.</p>
-          <p class="kucuk">Alerjen bilgisi menünün altında.</p>
+    <section class="bolum bilgi">
+      <div class="kap">
+        <div class="fis">
+          <div>
+            <span class="ust-yazi">Çalışma Saatleri</span>
+            <h3>Her sabah erkenden</h3>
+            <p><strong>Pazartesi – Cumartesi</strong> 07:00 – 21:00</p>
+            <p><strong>Pazar</strong> kapalı</p>
+            <p class="soluk">Sıcak sıkma ve çorba servisimiz sabahın ilk saatlerinde başlar.</p>
+          </div>
+          <div>
+            <span class="ust-yazi">Adres</span>
+            <h3>Yeni yerimizde</h3>
+            <p>Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
+            <p><a href="/iletisim.html">Haritada görüntüle</a></p>
+          </div>
+          <div>
+            <span class="ust-yazi">Tedarik Beyanı</span>
+            <h3>Bildiğimiz kaynaklar</h3>
+            <p class="soluk">Kırmızı etimiz Silifke Lezzet A.Ş.'den, tavuk ürünlerimiz kesintisiz soğuk zincirle Akdeniz Toros'tan, yoğurt ve peynir çeşitlerimiz Taşeli markasından tedarik edilir.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -217,25 +194,25 @@
   <footer class="site-alt">
     <div class="kap">
       <div>
-        <p class="baslik">Şef Kurşun</p>
-        <p>Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
+        <a href="/" class="marka"><b>Şef Kurşun</b><small>Restoran · Silifke</small></a>
+        <p style="margin-top:22px">Saray, 129. Sk. No:38<br>33950 Silifke / Mersin</p>
       </div>
       <div>
-        <h4>Ulaşın</h4>
+        <h4>İletişim</h4>
         <p><a href="tel:05073702399">0507 370 23 99</a><br>
         <a href="https://www.instagram.com/sefkursunsilifke" target="_blank" rel="noopener">@sefkursunsilifke</a><br>
         <a href="mailto:sefkursunrestoran@gmail.com">sefkursunrestoran@gmail.com</a></p>
       </div>
       <div>
-        <h4>Saatler</h4>
-        <p>Pzt–Cmt 07:00–21:00<br>Pazar kapalı</p>
+        <h4>Çalışma Saatleri</h4>
+        <p>Pazartesi – Cumartesi<br>07:00 – 21:00<br>Pazar kapalı</p>
       </div>
-      <p class="telif">© 2026 Şef Kurşun Restoran · Silifke</p>
+      <p class="telif">© 2026 Şef Kurşun Restoran · Silifke / Mersin. Tüm hakları saklıdır.</p>
     </div>
   </footer>
 
   <a href="/order.html" class="wa-sabit" aria-label="WhatsApp ile sipariş ver">
-    <span class="dugme dugme-wa">
+    <span class="dugme">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
       <span>Sipariş</span>
     </span>
