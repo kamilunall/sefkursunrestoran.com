@@ -5,131 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Sipariş | Şef Kurşun Restoran</title>
 <meta name="description" content="Şef Kurşun Restoran - WhatsApp ile hızlı sipariş. Döner, tantuni, sıkma ve börekler kapınıza gelsin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
-    --kirmizi:#b3261e; --koyu:#2b1a12; --krem:#fff8f0; --bej:#f3e6d6;
-    --yesil:#25d366; --yesil-koyu:#1da851; --gri:#7a6a5e; --radius:14px;
+    --kirmizi:#9a7a43; --pirinc:#b8955a; --koyu:#14110f; --krem:#f4eee4; --bej:rgba(42,36,32,.14); --kagit:#fbf8f2;
+    --yesil:#b8955a; --yesil-koyu:#9a7a43; --gri:#6e645a; --metin:#2a2420; --radius:0;
+    --f-baslik:"Cormorant Garamond",Georgia,serif; --f-metin:"Jost","Helvetica Neue",Arial,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--krem);color:var(--koyu);padding-bottom:110px}
+  body{font-family:var(--f-metin);font-weight:300;background:var(--krem);color:var(--metin);padding-bottom:110px;line-height:1.6;font-variant-numeric:lining-nums}
   a{color:inherit}
+  b,strong{font-weight:500}
 
-  header{background:var(--koyu);color:#fff;padding:18px 16px;text-align:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.25)}
-  header h1{font-size:1.35rem;letter-spacing:.5px}
-  header p{font-size:.85rem;opacity:.85;margin-top:4px}
-  header a.geri{position:absolute;left:14px;top:20px;font-size:.85rem;text-decoration:none;opacity:.85}
+  header{background:var(--koyu);color:#ece4d6;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:50;height:76px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid rgba(236,228,214,.14)}
+  header h1{font-family:var(--f-baslik);font-weight:600;font-size:1.45rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.1}
+  header p{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:var(--pirinc);margin-top:5px}
+  header a.geri{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:#a59b8d}
+  header a.geri:hover{color:var(--pirinc)}
+  @media(max-width:480px){header a.geri{font-size:0}header a.geri::before{content:"←";font-size:1.3rem;letter-spacing:0}}
 
-  .uyari{background:#ffe9c7;color:#7a4b00;text-align:center;padding:10px;font-size:.9rem;display:none}
+  .uyari{background:#1d1916;color:#ece4d6;text-align:center;padding:10px;font-size:.85rem;display:none}
   .uyari.goster{display:block}
 
-  nav.kategoriler{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;position:sticky;top:76px;background:var(--krem);z-index:40;scrollbar-width:none}
+  nav.kategoriler{display:flex;gap:26px;overflow-x:auto;padding:16px 20px;position:sticky;top:76px;background:var(--krem);z-index:40;scrollbar-width:none;border-bottom:1px solid var(--bej);justify-content:safe center}
   nav.kategoriler::-webkit-scrollbar{display:none}
-  nav.kategoriler a{white-space:nowrap;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid #e6d8c8;text-decoration:none;font-size:.9rem;font-weight:600}
+  nav.kategoriler a{white-space:nowrap;text-decoration:none;font-size:.72rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;padding:4px 0;border-bottom:1px solid transparent}
+  nav.kategoriler a:hover{color:var(--kirmizi);border-bottom-color:var(--kirmizi)}
 
-  main{max-width:760px;margin:0 auto;padding:0 16px}
-  section{margin:22px 0}
-  section h2{font-size:1.25rem;margin-bottom:12px;color:var(--kirmizi);border-bottom:2px solid var(--bej);padding-bottom:6px}
+  main{max-width:760px;margin:0 auto;padding:0 18px}
+  section{margin:44px 0}
+  section h2{font-family:var(--f-baslik);font-weight:500;font-size:2rem;margin-bottom:8px;color:var(--metin);text-align:center}
+  section h2::after{content:"";display:block;width:44px;height:1px;background:var(--pirinc);margin:12px auto 18px}
 
-  .kart{background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
-  .kart-ust{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-  .kart-ust h3{font-size:1.02rem}
-  .kart-ust .fiyat{font-weight:800;color:var(--kirmizi);white-space:nowrap}
-  .kart p.aciklama{font-size:.85rem;color:var(--gri);margin-top:4px;line-height:1.4}
-  .etiket{display:inline-block;font-size:.7rem;background:var(--kirmizi);color:#fff;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
+  .kart{background:var(--kagit);border:1px solid var(--bej);padding:18px;margin-bottom:12px}
+  .kart-ust{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+  .kart-ust h3{font-family:var(--f-baslik);font-weight:600;font-size:1.3rem;line-height:1.2}
+  .kart-ust .fiyat{font-family:var(--f-baslik);font-weight:600;font-size:1.25rem;color:var(--kirmizi);white-space:nowrap}
+  .kart p.aciklama{font-size:.88rem;color:var(--gri);margin-top:4px;line-height:1.5}
+  .etiket{display:inline-block;font-family:var(--f-metin);font-size:.6rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--kirmizi);border:1px solid var(--kirmizi);padding:1px 7px;margin-left:10px;vertical-align:middle}
 
-  .secenekler{margin-top:12px;border-top:1px dashed #e8dccd;padding-top:10px;display:none}
+  .secenekler{margin-top:14px;border-top:1px solid var(--bej);padding-top:12px;display:none}
   .kart.acik .secenekler{display:block}
-  .secenek-grup{margin-bottom:12px}
-  .secenek-grup h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.4px;color:var(--gri);margin-bottom:6px}
+  .secenek-grup{margin-bottom:14px}
+  .secenek-grup h4{font-size:.66rem;font-weight:400;text-transform:uppercase;letter-spacing:.24em;color:var(--kirmizi);margin-bottom:6px}
   .secenek-grup label{display:flex;align-items:center;gap:10px;padding:7px 4px;font-size:.95rem;cursor:pointer}
-  .secenek-grup label span.ek{margin-left:auto;font-size:.85rem;color:var(--kirmizi);font-weight:600}
-  input[type=checkbox],input[type=radio]{width:20px;height:20px;accent-color:var(--kirmizi);flex-shrink:0}
+  .secenek-grup label span.ek{margin-left:auto;font-size:.88rem;color:var(--kirmizi)}
+  input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(--kirmizi);flex-shrink:0}
   .icecek-liste{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
   @media(max-width:480px){.icecek-liste{grid-template-columns:1fr}}
 
-  .aksiyon{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px}
-  .btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.15s}
-  .btn-kirmizi{background:var(--kirmizi);color:#fff}
-  .btn-kirmizi:hover{background:#951d17}
-  .btn-cizgi{background:#fff;border:1.5px solid var(--kirmizi);color:var(--kirmizi)}
-  .btn-yesil{background:var(--yesil);color:#fff;width:100%;padding:14px;font-size:1.05rem}
+  .aksiyon{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px}
+  .btn{font-family:var(--f-metin);border:1px solid var(--pirinc);background:var(--pirinc);color:var(--koyu);padding:11px 18px;font-weight:500;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+  .btn-kirmizi:hover{background:var(--kirmizi);border-color:var(--kirmizi)}
+  .btn-cizgi{background:transparent;color:var(--metin);border-color:var(--metin)}
+  .btn-cizgi:hover{color:var(--kirmizi);border-color:var(--kirmizi)}
+  .btn-yesil{width:100%;padding:17px;font-size:.78rem;display:flex;align-items:center;justify-content:center}
   .btn-yesil:hover{background:var(--yesil-koyu)}
-  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
 
-  .adet{display:inline-flex;align-items:center;border:1.5px solid #e6d8c8;border-radius:10px;overflow:hidden}
-  .adet button{width:38px;height:38px;border:0;background:#fff;font-size:1.2rem;cursor:pointer;color:var(--kirmizi);font-weight:700}
-  .adet span{min-width:34px;text-align:center;font-weight:700}
+  .adet{display:inline-flex;align-items:center;border:1px solid var(--metin)}
+  .adet button{width:38px;height:36px;border:0;background:transparent;font-size:1.1rem;cursor:pointer;color:var(--metin)}
+  .adet button:hover{color:var(--kirmizi)}
+  .adet span{min-width:30px;text-align:center;font-weight:400}
 
-  .sepet-bar{position:fixed;bottom:0;left:0;right:0;background:var(--koyu);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:60;box-shadow:0 -3px 14px rgba(0,0,0,.25);transform:translateY(110%);transition:.25s}
+  .sepet-bar{position:fixed;bottom:0;left:0;right:0;background:var(--koyu);color:#ece4d6;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;z-index:60;transform:translateY(110%);transition:.25s;border-top:1px solid rgba(236,228,214,.14)}
   .sepet-bar.goster{transform:translateY(0)}
-  .sepet-bar .ozet small{display:block;opacity:.75;font-size:.8rem}
-  .sepet-bar .ozet b{font-size:1.15rem}
+  .sepet-bar .ozet small{display:block;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:#a59b8d}
+  .sepet-bar .ozet b{font-family:var(--f-baslik);font-weight:600;font-size:1.5rem}
 
-  .panel-arka{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;display:none;align-items:flex-end;justify-content:center}
+  .panel-arka{position:fixed;inset:0;background:rgba(20,17,15,.65);z-index:70;display:none;align-items:flex-end;justify-content:center}
   .panel-arka.goster{display:flex}
-  .panel{background:var(--krem);width:100%;max-width:760px;max-height:92vh;border-radius:20px 20px 0 0;overflow-y:auto;padding:18px 16px 24px;animation:yukari .25s}
+  .panel{background:var(--krem);width:100%;max-width:760px;max-height:92vh;overflow-y:auto;padding:22px 18px 28px;animation:yukari .25s}
   @keyframes yukari{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-  .panel-baslik{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-  .panel-baslik h2{font-size:1.2rem;color:var(--kirmizi)}
-  .kapat{background:none;border:0;font-size:1.6rem;cursor:pointer;color:var(--gri)}
+  .panel-baslik{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .panel-baslik h2{font-family:var(--f-baslik);font-weight:500;font-size:1.8rem;color:var(--metin)}
+  .kapat{background:none;border:0;font-size:1.8rem;cursor:pointer;color:var(--metin);line-height:1;font-weight:300}
 
-  .sepet-satir{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px}
-  .sepet-satir .ust{display:flex;justify-content:space-between;gap:8px;font-weight:700}
+  .sepet-satir{background:var(--kagit);border:1px solid var(--bej);padding:14px;margin-bottom:10px}
+  .sepet-satir .ust{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-baslik);font-weight:600;font-size:1.15rem}
   .sepet-satir ul{list-style:none;margin-top:6px;font-size:.85rem;color:var(--gri)}
-  .sepet-satir ul li::before{content:"• "}
-  .sepet-satir .alt{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-  .sil{background:none;border:0;color:var(--kirmizi);font-size:.85rem;cursor:pointer;text-decoration:underline}
-  .toplam{display:flex;justify-content:space-between;font-size:1.2rem;font-weight:800;padding:14px 4px;border-top:2px solid var(--bej);margin-top:6px}
+  .sepet-satir ul li::before{content:"— "}
+  .sepet-satir .alt{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .sil{background:none;border:0;color:var(--gri);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .sil:hover{color:var(--kirmizi)}
+  .toplam{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-baslik);font-size:1.6rem;font-weight:600;padding:16px 4px;border-top:1px solid var(--metin);margin-top:8px}
 
-  form .alan{margin-bottom:14px}
-  form label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+  form .alan{margin-bottom:16px}
+  form label{display:block;font-weight:400;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;color:var(--gri)}
   form label .zorunlu{color:var(--kirmizi)}
-  form input[type=text],form textarea{width:100%;padding:12px;border:1.5px solid #e6d8c8;border-radius:10px;font-size:1rem;background:#fff;font-family:inherit}
-  form input:focus,form textarea:focus{outline:none;border-color:var(--kirmizi)}
+  form input[type=text],form textarea{width:100%;padding:13px;border:1px solid rgba(42,36,32,.3);font-size:1rem;background:var(--kagit);font-family:inherit;font-weight:300;color:var(--metin)}
+  form input:focus,form textarea:focus{outline:none;border-color:var(--pirinc)}
   form textarea{min-height:80px;resize:vertical}
-  .satir-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .hata{color:var(--kirmizi);font-size:.82rem;margin-top:4px;display:none}
-  .alan.gecersiz input,.alan.gecersiz textarea{border-color:var(--kirmizi)}
+  .satir-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hata{color:#8a2b2b;font-size:.82rem;margin-top:4px;display:none}
+  .alan.gecersiz input,.alan.gecersiz textarea{border-color:#8a2b2b}
   .alan.gecersiz .hata{display:block}
 
   /* Sipariş türü */
   .tur-secim{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .tur-secim label.tur{display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:2px solid #e6d8c8;border-radius:12px;padding:12px;cursor:pointer;font-weight:600;margin:0;transition:.15s}
-  .tur-secim label.tur.secili{border-color:var(--kirmizi);background:#fff1ef;color:var(--kirmizi)}
-  .tur-secim input{width:18px;height:18px;accent-color:var(--kirmizi)}
+  .tur-secim label.tur{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--kagit);border:1px solid rgba(42,36,32,.3);padding:13px;cursor:pointer;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--metin);margin:0;transition:.15s}
+  .tur-secim label.tur.secili{background:var(--koyu);border-color:var(--koyu);color:#ece4d6}
+  .tur-secim input{width:16px;height:16px;accent-color:var(--pirinc)}
   #teslimatAlanlari.gizli{display:none}
-  .gelal-bilgi{background:#e8f5e9;color:#1a7f37;border-radius:10px;padding:10px 12px;font-size:.88rem;margin-bottom:14px;display:none}
+  .gelal-bilgi{background:var(--kagit);border:1px solid var(--pirinc);padding:12px 14px;font-size:.9rem;margin-bottom:16px;display:none}
   .gelal-bilgi.goster{display:block}
 
-  .konum-kutu{background:#fff;border:1.5px dashed #e6d8c8;border-radius:12px;padding:12px}
+  .konum-kutu{background:var(--kagit);border:1px solid var(--bej);padding:14px}
   .konum-btnler{display:flex;gap:8px;flex-wrap:wrap}
-  .konum-btnler .btn{font-size:.85rem;padding:9px 12px}
-  #harita{height:240px;border-radius:10px;margin-top:10px;display:none}
+  .konum-btnler .btn{padding:9px 13px;font-size:.64rem}
+  #harita{height:240px;margin-top:12px;display:none}
   #harita.goster{display:block}
   .konum-durum{font-size:.85rem;color:var(--gri);margin-top:8px}
-  .konum-durum.ok{color:#1a7f37;font-weight:600}
+  .konum-durum.ok{color:#3d6b45;font-weight:400}
 
   .bos{text-align:center;color:var(--gri);padding:30px 10px}
-  footer{text-align:center;font-size:.8rem;color:var(--gri);padding:26px 16px}
+  footer{text-align:center;font-size:.78rem;letter-spacing:.04em;color:var(--gri);padding:30px 16px}
 </style>
 </head>
 <body>
 
 <header>
   <a class="geri" href="https://sefkursunrestoran.com">← Ana Sayfa</a>
-  <h1>🍽️ Şef Kurşun Restoran</h1>
-  <p>WhatsApp ile Hızlı Sipariş • Silifke / Mersin</p>
+  <h1>Şef Kurşun</h1>
+  <p>Online Sipariş · Silifke</p>
 </header>
 
-<div class="uyari" id="uyari">⏰ Bugün Pazar, restoranımız kapalıdır. Siparişiniz Pazartesi 07:00'den itibaren değerlendirilir.</div>
+<div class="uyari" id="uyari">Bugün Pazar, restoranımız kapalıdır. Siparişiniz Pazartesi 07:00'den itibaren değerlendirilir.</div>
 
 <nav class="kategoriler">
-  <a href="#durumler">🥙 Dürümler</a>
-  <a href="#tabaklar">🍛 Tabaklar & Çorbalar</a>
-  <a href="#sikmalar">🥞 Sıkma & Börek</a>
-  <a href="#yan">🥗 Yan Ürünler</a>
-  <a href="#icecekler">🥤 İçecekler</a>
+  <a href="#durumler">Dürümler</a>
+  <a href="#tabaklar">Tabaklar & Çorbalar</a>
+  <a href="#sikmalar">Sıkma & Börek</a>
+  <a href="#yan">Yan Ürünler</a>
+  <a href="#icecekler">İçecekler</a>
 </nav>
 
 <main id="menu"></main>
@@ -138,13 +149,13 @@
 
 <div class="sepet-bar" id="sepetBar">
   <div class="ozet"><small id="sepetAdet">0 ürün</small><b id="sepetToplam">0 ₺</b></div>
-  <button class="btn btn-kirmizi" onclick="panelAc()">Sepeti Gör & Sipariş Ver →</button>
+  <button class="btn btn-kirmizi" onclick="panelAc()">Sepeti Gör</button>
 </div>
 
 <div class="panel-arka" id="panelArka" onclick="if(event.target===this)panelKapat()">
   <div class="panel">
     <div class="panel-baslik">
-      <h2>🛒 Siparişiniz</h2>
+      <h2>Siparişiniz</h2>
       <button class="kapat" onclick="panelKapat()" aria-label="Kapat">×</button>
     </div>
 
@@ -152,23 +163,23 @@
     <div class="toplam"><span>Toplam</span><span id="panelToplam">0 ₺</span></div>
 
     <form id="siparisForm" novalidate>
-      <h2 style="font-size:1.1rem;color:var(--kirmizi);margin:14px 0 12px">📋 Teslimat Bilgileri</h2>
+      <h2 style="font-family:var(--f-baslik);font-weight:500;font-size:1.5rem;margin:18px 0 14px">Teslimat Bilgileri</h2>
 
       <div class="alan">
         <label>Sipariş Türü <span class="zorunlu">*</span></label>
         <div class="tur-secim">
           <label class="tur secili">
             <input type="radio" name="tur" value="teslimat" checked onchange="turDegisti()">
-            🛵 Adrese Teslim
+            Adrese Teslim
           </label>
           <label class="tur">
             <input type="radio" name="tur" value="gelal" onchange="turDegisti()">
-            🏪 Gel-Al
+            Gel-Al
           </label>
         </div>
       </div>
       <div class="gelal-bilgi" id="gelalBilgi">
-        🏪 Siparişiniz hazır olduğunda WhatsApp üzerinden bilgilendirilirsiniz; restoranımızdan teslim alabilirsiniz.
+        Siparişiniz hazır olduğunda WhatsApp üzerinden bilgilendirilirsiniz; restoranımızdan teslim alabilirsiniz.<br><strong>Adres:</strong> Saray, 129. Sk. No:38, 33950 Silifke/Mersin
       </div>
 
       <div class="satir-2">
@@ -192,12 +203,12 @@
         </div>
 
         <div class="alan">
-          <label>📍 Konum (isteğe bağlı, kuryeye kolaylık)</label>
+          <label>Konum (isteğe bağlı, kuryeye kolaylık)</label>
           <div class="konum-kutu">
             <div class="konum-btnler">
-              <button type="button" class="btn btn-cizgi" onclick="konumBul()">🎯 Konumumu Bul</button>
-              <button type="button" class="btn btn-cizgi" onclick="haritaAc()">🗺️ Haritada Seç</button>
-              <button type="button" class="btn btn-cizgi" id="konumSilBtn" style="display:none" onclick="konumSil()">✖ Kaldır</button>
+              <button type="button" class="btn btn-cizgi" onclick="konumBul()">Konumumu Bul</button>
+              <button type="button" class="btn btn-cizgi" onclick="haritaAc()">Haritada Seç</button>
+              <button type="button" class="btn btn-cizgi" id="konumSilBtn" style="display:none" onclick="konumSil()">Kaldır</button>
             </div>
             <div id="harita"></div>
             <div class="konum-durum" id="konumDurum">Konum eklenmedi. Haritada iğneyi sürükleyerek tam yerinizi işaretleyebilirsiniz.</div>
@@ -206,12 +217,12 @@
       </div>
 
       <div class="alan">
-        <label>📝 Sipariş Notu (isteğe bağlı)</label>
+        <label>Sipariş Notu (isteğe bağlı)</label>
         <textarea id="not" placeholder="Örn: Zili çalmayın, kapıda bekleyin; acılı olsun..." style="min-height:60px"></textarea>
       </div>
 
       <button type="submit" class="btn btn-yesil" id="gonderBtn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" style="vertical-align:-5px;margin-right:6px"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right:10px"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.6.7.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
         WhatsApp ile Sipariş Ver
       </button>
       <p style="font-size:.8rem;color:var(--gri);text-align:center;margin-top:10px">Butona bastığınızda WhatsApp açılır, sipariş metni hazır gelir; sadece "Gönder"e basmanız yeterli.</p>
@@ -264,7 +275,7 @@ const ICECEKLER = [
 
 const KATEGORILER = [
   {
-    id:"durumler", baslik:"🥙 Dürümler",
+    id:"durumler", baslik:"Dürümler",
     secenekli:true, lavas:true, malzeme:true, icecek:true,
     urunler:[
       { id:"tavuk-doner",     ad:"Tavuk Döner Dürüm",     fiyat:160, etiket:"",        aciklama:"Özel soslu taze tavuk döner, çıtır lavaşta." },
@@ -277,7 +288,7 @@ const KATEGORILER = [
     ]
   },
   {
-    id:"tabaklar", baslik:"🍛 Tabaklar & Çorbalar",
+    id:"tabaklar", baslik:"Tabaklar & Çorbalar",
     secenekli:true, lavas:false, malzeme:true, icecek:true,
     urunler:[
       { id:"pilav-ustu-doner",  ad:"Pilav Üstü Tavuk Döner",   fiyat:250, etiket:"Şefin Seçimi", aciklama:"Tereyağlı pilav üzerinde tavuk döner, patates kızartması ile." },
@@ -292,25 +303,25 @@ const KATEGORILER = [
     ]
   },
   {
-    id:"sikmalar", baslik:"🥞 Sıkma & Börekler",
+    id:"sikmalar", baslik:"Sıkma & Börekler",
     secenekli:false,
     urunler:[
-      { id:"bazlama",       ad:"Sade Bazlama",                  fiyat:25  },
-      { id:"pat-sikma",     ad:"Patatesli Sıkma",               fiyat:60  },
-      { id:"kasar-sikma",   ad:"Kaşar Peynirli Sıkma",          fiyat:80  },
-      { id:"cokelek-sikma", ad:"Çökelekli Sıkma",               fiyat:80  },
-      { id:"deri-sikma",    ad:"Deri Peynirli Sıkma",           fiyat:100 },
-      { id:"pat-borek",     ad:"Patatesli Börek",               fiyat:100 },
-      { id:"ispanak-borek", ad:"Ispanaklı Börek",               fiyat:100 },
-      { id:"cokelek-borek", ad:"Çökelekli Börek",               fiyat:100 },
-      { id:"kasar-borek",   ad:"Kaşar Peynirli Börek",          fiyat:110 },
-      { id:"deri-borek",    ad:"Deri Peynirli Börek",           fiyat:125 },
-      { id:"karisik-ik",    ad:"Karışık Börek (Isp+Kaş)",       fiyat:130 },
-      { id:"karisik-pk",    ad:"Karışık Börek (Patates+Kaşar)", fiyat:130 }
+      { id:"bazlama",       ad:"Sade Bazlama",                  fiyat:25, aciklama:"Sacda pişen, sıcacık sade bazlama." },
+      { id:"pat-sikma",     ad:"Patatesli Sıkma",               fiyat:60, aciklama:"Usta elinde açılan hamur, baharatlı patates harcıyla." },
+      { id:"kasar-sikma",   ad:"Kaşar Peynirli Sıkma",          fiyat:80, aciklama:"Usta elinde açılan hamur, bol kaşar peyniriyle." },
+      { id:"cokelek-sikma", ad:"Çökelekli Sıkma",               fiyat:80, aciklama:"Usta elinde açılan hamur, çökelek ve yeşillikle." },
+      { id:"deri-sikma",    ad:"Deri Peynirli Sıkma",           fiyat:100, aciklama:"Usta elinde açılan hamur, yöresel deri peyniriyle." },
+      { id:"pat-borek",     ad:"Patatesli Börek",               fiyat:100, aciklama:"El açması sac böreği, baharatlı patates harcıyla." },
+      { id:"ispanak-borek", ad:"Ispanaklı Börek",               fiyat:100, aciklama:"El açması sac böreği, taze ıspanak ve soğanla." },
+      { id:"cokelek-borek", ad:"Çökelekli Börek",               fiyat:100, aciklama:"El açması sac böreği, çökelek peyniriyle." },
+      { id:"kasar-borek",   ad:"Kaşar Peynirli Börek",          fiyat:110, aciklama:"El açması sac böreği, bol kaşar peyniriyle." },
+      { id:"deri-borek",    ad:"Deri Peynirli Börek",           fiyat:125, aciklama:"El açması sac böreği, yöresel deri peyniriyle." },
+      { id:"karisik-ik",    ad:"Karışık Börek (Isp+Kaş)",       fiyat:130, aciklama:"Ispanak ve kaşar peynirinin uyumu." },
+      { id:"karisik-pk",    ad:"Karışık Börek (Patates+Kaşar)", fiyat:130, aciklama:"Baharatlı patates ve kaşar peyniri bir arada." }
     ]
   },
   {
-    id:"yan", baslik:"🥗 Yan Ürünler",
+    id:"yan", baslik:"Yan Ürünler",
     secenekli:false,
     urunler:[
       { id:"pilav",   ad:"Pirinç Pilavı",       fiyat:50,  aciklama:"Tane tane, bol tereyağlı." },
@@ -322,7 +333,7 @@ const KATEGORILER = [
     ]
   },
   {
-    id:"icecekler", baslik:"🥤 İçecekler",
+    id:"icecekler", baslik:"İçecekler",
     secenekli:false,
     urunler: ICECEKLER.map(i => ({ id:"ic-"+i.id, ad:i.ad, fiyat:i.fiyat }))
   }
@@ -377,7 +388,7 @@ function secenekliKart(kat,u){
 
   const icecekHTML = kat.icecek ? `
     <div class="secenek-grup">
-      <h4>🥤 Yanında İyi Gider (tek seçim)</h4>
+      <h4>Yanında İyi Gider (tek seçim)</h4>
       <div class="icecek-liste">
         <label><input type="radio" name="icecek-${u.id}" value="" checked> İçecek istemiyorum</label>
         ${ICECEKLER.map(i=>`<label><input type="radio" name="icecek-${u.id}" value="${i.id}"> ${i.ad}<span class="ek">+${i.fiyat} ₺</span></label>`).join("")}
@@ -404,7 +415,7 @@ function secenekliKart(kat,u){
     </div>
     <div class="aksiyon" id="ackapa-${u.id}">
       <span style="font-size:.85rem;color:var(--gri)">Seçenekler için dokunun</span>
-      <button type="button" class="btn btn-cizgi" onclick="kartAcKapat('${u.id}')">Seç ▾</button>
+      <button type="button" class="btn btn-cizgi" onclick="kartAcKapat('${u.id}')">Seçenekler</button>
     </div>
   </div>`;
 }
@@ -511,7 +522,7 @@ function sepetGuncelle(animasyon){
         </div>
         <button type="button" class="sil" onclick="satirSil('${esc(s.anahtar)}')">Kaldır</button>
       </div>
-    </div>`).join("") : `<div class="bos">Sepetiniz boş. Menüden ürün ekleyin 🍽️</div>`;
+    </div>`).join("") : `<div class="bos">Sepetiniz boş. Menüden ürün ekleyebilirsiniz.</div>`;
 
   document.getElementById("gonderBtn").disabled = sepet.length===0;
 

@@ -1,0 +1,178 @@
+/* Şef Kurşun Restoran – ortak stil
+   Koyu zemin, fildişi metin, pirinç vurgu; zarif serif başlıklar. */
+
+:root {
+  --gece: #14110f;
+  --gece-2: #1d1916;
+  --fildisi: #f4eee4;
+  --fildisi-2: #ebe3d6;
+  --metin: #2a2420;
+  --metin-soluk: #6e645a;
+  --acik: #ece4d6;
+  --acik-soluk: #a59b8d;
+  --pirinc: #b8955a;
+  --pirinc-koyu: #9a7a43;
+  --bordo: #7a1f1f;
+  --cizgi-koyu: rgba(236, 228, 214, .14);
+  --cizgi-acik: rgba(42, 36, 32, .14);
+
+  --f-baslik: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --f-metin: "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--fildisi);
+  color: var(--metin);
+  font-family: var(--f-metin);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.75;
+  font-variant-numeric: lining-nums;
+}
+
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+strong, b { font-weight: 500; }
+
+.kap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+.dar { max-width: 760px; }
+
+/* ---------- TİPOGRAFİ ---------- */
+.ust-yazi {
+  display: inline-block;
+  font-size: .74rem;
+  font-weight: 400;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--pirinc);
+}
+.baslik {
+  font-family: var(--f-baslik);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -.005em;
+}
+.baslik em { font-style: italic; font-weight: 400; color: var(--pirinc); }
+.susleme {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--pirinc);
+}
+.susleme::before, .susleme::after { content: ""; height: 1px; width: 48px; background: currentColor; opacity: .6; }
+.susleme span { width: 6px; height: 6px; transform: rotate(45deg); border: 1px solid currentColor; }
+
+/* ---------- ÜST ---------- */
+.site-ust {
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 100;
+  color: var(--acik);
+}
+.site-ust.dolu { position: sticky; background: var(--gece); border-bottom: 1px solid var(--cizgi-koyu); }
+.site-ust .kap { display: flex; align-items: center; gap: 36px; min-height: 92px; }
+.marka { text-decoration: none; margin-right: auto; line-height: 1.1; }
+.marka b {
+  display: block;
+  font-family: var(--f-baslik);
+  font-weight: 600;
+  font-size: 1.55rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.marka small { display: block; font-size: .64rem; letter-spacing: .42em; text-transform: uppercase; color: var(--pirinc); margin-top: 3px; }
+.menu-linkler { display: flex; gap: 34px; list-style: none; }
+.menu-linkler a {
+  text-decoration: none;
+  font-size: .78rem;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, color .2s;
+}
+.menu-linkler a:hover, .menu-linkler a[aria-current="page"] { color: var(--pirinc); border-bottom-color: var(--pirinc); }
+
+/* ---------- DÜĞMELER ---------- */
+.dugme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--f-metin);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 30px;
+  border: 1px solid var(--pirinc);
+  background: var(--pirinc);
+  color: var(--gece);
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+  line-height: 1.2;
+}
+.dugme:hover { background: var(--pirinc-koyu); border-color: var(--pirinc-koyu); }
+.dugme svg { width: 18px; height: 18px; flex-shrink: 0; }
+.dugme-cizgi { background: transparent; color: inherit; border-color: currentColor; }
+.dugme-cizgi:hover { background: transparent; color: var(--pirinc); border-color: var(--pirinc); }
+.dugme-kucuk { padding: 11px 20px; font-size: .72rem; }
+
+/* ---------- BÖLÜMLER ---------- */
+.koyu { background: var(--gece); color: var(--acik); }
+.koyu .soluk { color: var(--acik-soluk); }
+.soluk { color: var(--metin-soluk); }
+.bolum { padding: 120px 0; }
+
+/* Adisyon / bilgi kutusu */
+.fis { border-top: 1px solid var(--cizgi-acik); border-bottom: 1px solid var(--cizgi-acik); }
+.koyu .fis { border-color: var(--cizgi-koyu); }
+
+/* Taşındık şeridi */
+.duyuru {
+  background: var(--gece-2);
+  color: var(--acik);
+  border-bottom: 1px solid var(--cizgi-koyu);
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-align: center;
+  padding: 11px 20px;
+  position: relative;
+  z-index: 101;
+}
+.duyuru b { color: var(--pirinc); font-weight: 400; letter-spacing: .3em; text-transform: uppercase; font-size: .7rem; margin-right: 10px; }
+.duyuru a { color: var(--pirinc); text-underline-offset: 3px; white-space: nowrap; }
+
+/* ---------- ALT ---------- */
+.site-alt { background: var(--gece); color: var(--acik); padding: 90px 0 110px; font-size: .92rem; }
+.site-alt .kap { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+.site-alt .marka b { font-size: 1.8rem; }
+.site-alt h4 { font-size: .7rem; font-weight: 400; letter-spacing: .3em; text-transform: uppercase; color: var(--pirinc); margin-bottom: 14px; }
+.site-alt p { color: var(--acik-soluk); }
+.site-alt a { color: var(--acik); text-decoration: none; }
+.site-alt a:hover { color: var(--pirinc); }
+.site-alt .telif { grid-column: 1 / -1; border-top: 1px solid var(--cizgi-koyu); padding-top: 26px; margin-top: 30px; font-size: .76rem; letter-spacing: .06em; }
+
+/* Sağ alttaki sipariş düğmesi */
+.wa-sabit { position: fixed; right: 22px; bottom: 22px; z-index: 200; text-decoration: none; }
+.wa-sabit .dugme { box-shadow: 0 10px 30px rgba(0,0,0,.25); padding: 14px 22px; }
+
+@media (max-width: 860px) {
+  body { font-size: 16px; }
+  .kap { padding: 0 20px; }
+  .bolum { padding: 80px 0; }
+  .site-ust .kap { flex-wrap: wrap; gap: 0 16px; min-height: 0; padding-top: 16px; padding-bottom: 6px; }
+  .marka b { font-size: 1.3rem; }
+  .menu-linkler { order: 3; width: 100%; gap: 22px; overflow-x: auto; padding: 12px 0 6px; scrollbar-width: none; }
+  .menu-linkler::-webkit-scrollbar { display: none; }
+  .menu-linkler a { white-space: nowrap; font-size: .7rem; }
+  .site-alt { padding: 64px 0 100px; }
+  .site-alt .kap { grid-template-columns: 1fr; gap: 30px; }
+  .wa-sabit .dugme span { display: none; }
+  .wa-sabit .dugme { padding: 14px; }
+}
